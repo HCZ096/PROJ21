@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Bicicleta extends Aluguer{
+public class Bicicleta extends VeiculoAluguer{
 
 
     public Bicicleta(){}

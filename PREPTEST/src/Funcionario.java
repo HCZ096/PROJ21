@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Funcionario extends Utilizador{
     protected int anoContrato;
 
-
+    public Funcionario(){}
     public Funcionario(String nome,int id,int anoContrato) {
         super(nome,id);
         this.anoContrato = anoContrato ;
@@ -12,5 +12,5 @@ public class Funcionario extends Utilizador{
 
     public double descontoUtilizador() {
         return 0;
-    }
+    }}
 

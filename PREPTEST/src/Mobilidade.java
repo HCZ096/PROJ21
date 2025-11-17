@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Mobilidade {
+public class Mobilidade extends Aluguer{
 
     public Mobilidade(){
         super();
@@ -52,18 +52,30 @@ public class Mobilidade {
 
         }
         if (input.equals("1")){
-            return "Docente nas faculdades : " + ListaFaculdades  ;
+            System.out.println ("Docente nas faculdades : " + ListaFaculdades)  ;
         }
         else if (input.equals("2")){
-            return "Funcionario em Servico : " + servico;
+            System.out.println ("Funcionario em Servico : " + servico);
         }
         else{
-            return "Opcao Invalida . \n ";
+            System.out.println ("Opcao Invalida . \n ");
         }
+
+        System.out.println("Servicos Extras \n");
+        System.out.println("Escolha os servicos extras : | 0 -  Capacete | 1 - Luz\n");
+        int a = sc.nextInt();
+        double custo_servicoextra =  servicoextra(a);
+
+
+
+
+
+
+
+
+
+
     }
 
-
-
-
 }
-}
+

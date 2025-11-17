@@ -12,7 +12,11 @@ public class Ndocente  extends Funcionario{
     }
     public void setServico(String servico) {}
 
+    public double descontoUtilizador() {
+        //if(obj == Trotinete)
+            // saber se o servico e com led ou nao
+            //int preco = servicoextra(obj)
+        return 0;
 
 
-}
-
+} }

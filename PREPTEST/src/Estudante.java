@@ -14,10 +14,7 @@ public class Estudante extends Utilizador{
         return op == "1" ? "Cartao" :"Referencia Multibanco";
     }
 
-    @Override
-    public double descontoUtilizador() {
 
 
-        return 0;
     }
-}
+

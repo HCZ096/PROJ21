@@ -1,8 +1,15 @@
-import java.util.Scanner;
+public class Trotinete extends VeiculoEletrico{
 
-public class Trotinete extends Aluguer{
 
-    public Trotinete(){}
+    public boolean lcd(int op){
+        return op == 1 ? true : false;
+    }
+
+    public int niveldaBateria(){
+        return 0 ;
+    }
+
+    }
 
 
 
