@@ -32,8 +32,8 @@ public class Aluguer extends Utilizador{
         int data_inicial;
         int data_fim;
         String info = pessoa.informacao();
-        saldo =  data_fim-data_inicial
-        saldo *=
+        saldo =  data_fim-data_inicial;
+        saldo *= ;
         return saldo;
     }/**/
 

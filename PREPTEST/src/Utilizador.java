@@ -14,8 +14,8 @@ public class Utilizador {
     public double descontoUtilizador(){
         return 0;
     }
-    public String metodopagamento(int opcao){
-        return opcao ==  1 ? "Referencia Multibanco" : "Cartao";
+    public String metodopagamento(){
+        return 0;
     }
 
 }

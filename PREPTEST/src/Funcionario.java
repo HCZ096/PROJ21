@@ -7,7 +7,7 @@ public class Funcionario extends Utilizador{
 
     public Funcionario(String nome,int id,int anoContrato) {
         super(nome,id);
-        this.anoContrato = anoContrato;
+        this.anoContrato = anoContrato ;
     }
 
     public double descontoUtilizador() {
