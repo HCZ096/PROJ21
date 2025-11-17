@@ -65,7 +65,7 @@ public class Mobilidade extends Aluguer{
         System.out.println("Escolha os servicos extras : | 0 -  Capacete | 1 - Luz\n");
         int a = sc.nextInt();
         double custo_servicoextra =  servicoextra(a);
-
+        System.out.println(custo_servicoextra);
 
 
 
