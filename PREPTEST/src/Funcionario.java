@@ -10,7 +10,6 @@ public class Funcionario extends Utilizador{
         this.anoContrato = anoContrato ;
     }
 
-    public double descontoUtilizador() {
-        return 0;
-    }}
+
+    }
 

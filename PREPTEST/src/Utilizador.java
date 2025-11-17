@@ -1,3 +1,4 @@
+
 public class Utilizador {
 
     private String nome;
@@ -9,13 +10,30 @@ public class Utilizador {
         this.id = id;
     }
 
-    public String informacao() {return "0";}// funcao responsavel por setar o nome e numero de estudante ou funcionario
+        public String getNome(String nome) {
+            return nome;
+        }
 
-    public double descontoUtilizador(){
-        return 0;
-    }
+        public void setNome(String nome) {
+            this.nome = nome;
+        }
+
+        public int getId(int id) {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
     public String metodopagamento(){
         return "0";
     }
+    public String toString(){
+        return "Nome :" + nome + " " + "ID : " + id;
+    }
 
 }
+
+
+
+

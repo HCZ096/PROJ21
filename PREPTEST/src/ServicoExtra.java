@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class ServicoExtra extends Aluguer {
 
     public String servicoextra() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);// Capacete e Luz
 
         System.out.println("Qual o servico extra a adicionar (Trotinete)? | 1 - LCD C MAPA | 2 - LCD S MAPA");
         String input = sc.nextLine();

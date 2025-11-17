@@ -5,25 +5,22 @@ public class Bicicleta extends VeiculoAluguer{
 
     public Bicicleta(){}
 
-    public String servicoextra() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Qual o servico extra a adicionar (Bicicleta)? | 1 - Uma Pessoa | 2 - Duas Pessoas");
-        String input = sc.nextLine();
-
-        while(true){
-
-        if (input == "1") {
-            return input; //temporario
-
+    public boolean npessoas(String op) {
+        return op == "1" ? true : false;// 1 se for 2 lugares e 0 se for 1 lugar
+    }
+    public double precophora(Utilizador op) {
+        /*if(npessoas("1")){
+                if(op.equals(op.Estudante)
+                )
+                return 2.0;}
+                else if(op.equals(Funcionario)){return 3.0;}
+            }
+            else if(npessoas("0")){
         }
-        else if (input == "2") {
-            return input; // temporario
         }
-        else{
-            System.out.println("Opcao invalida");
-
-
-        }}
+         */
+        return 0;
+        }
 
     }
-}
+
