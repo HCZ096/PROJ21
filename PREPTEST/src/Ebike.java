@@ -1,11 +1,15 @@
 import java.util.Scanner;
 
 public class Ebike extends VeiculoEletrico{
+    private boolean BateriaRemovivel ;
 
-    public String servicoextra() {
+    public boolean getBateriaRemovivel() {
+        return BateriaRemovivel;
+    }
 
-
-    return "0";
-            }}
+    public void setBateriaRemovivel(boolean bateriaRemovivel) {
+        BateriaRemovivel = bateriaRemovivel;
+    }
+}
 
 

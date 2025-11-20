@@ -1,8 +1,18 @@
 public class Trotinete extends VeiculoEletrico{
+private boolean comLcd;
+
+public Trotinete(){}
+public Trotinete(boolean comLcd){
+    this.comLcd = comLcd;
+}
 
 
-    public boolean lcd(int op){
-        return op == 1 ? true : false;
+    public boolean getComLcd() {
+        return comLcd;
+    }
+
+    public void setComLcd(boolean comLcd) {
+        this.comLcd = comLcd;
     }
 
     public int niveldaBateria(){

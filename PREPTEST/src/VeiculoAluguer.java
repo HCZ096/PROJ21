@@ -1,7 +1,7 @@
-public class VeiculoAluguer {
+abstract public class VeiculoAluguer extends Aluguer{
     private int identificador;
     private String localizador;
-
+    Aluguer aluguer = new Aluguer();
     public VeiculoAluguer(){};
 
     public VeiculoAluguer(int identificador, String localizador){
@@ -23,5 +23,8 @@ public class VeiculoAluguer {
 
     public void setLocalizador(String localizador) {
         this.localizador = localizador;
+    }
+    public double precophora(){
+        return 0.0;
     }
 }

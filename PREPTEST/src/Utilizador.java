@@ -1,8 +1,10 @@
 
-public class Utilizador {
+public abstract class Utilizador {
 
     private String nome;
     private int id;
+
+
     public Utilizador() {}
 
     public Utilizador(String nome, int id) {
@@ -29,7 +31,17 @@ public class Utilizador {
         return "0";
     }
     public String toString(){
-        return "Nome :" + nome + " " + "ID : " + id;
+        return " ";
+    }
+    public double calcularprecobicicleta(Bicicleta b){
+        return 0.0;
+    }
+
+    public double calcularprecotrotinete(Trotinete t){
+        return 0.0;
+    }
+    public double calcularprecoEbike(Ebike e){
+        return 0.0;
     }
 
 }
