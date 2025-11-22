@@ -1,10 +1,10 @@
-abstract public class VeiculoAluguer extends Aluguer{
+abstract public class VeiculDeAluguer extends Aluguer{
     private int identificador;
     private String localizador;
     Aluguer aluguer = new Aluguer();
-    public VeiculoAluguer(){};
+    public VeiculoDeAluguer(){};
 
-    public VeiculoAluguer(int identificador, String localizador){
+    public VeiculoDeAluguer(int identificador, String localizador){
         this.identificador = identificador;
         this.localizador = localizador;
     }

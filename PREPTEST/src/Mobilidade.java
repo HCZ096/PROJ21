@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.LocalTime;
 
 public class Mobilidade extends Aluguer{
 
@@ -17,9 +18,42 @@ public class Mobilidade extends Aluguer{
             System.out.println("1- Carregar Utilizador | 2 - Carregar veiculo | 3- Carregar Aluguer | 4- Criar Aluguer | 5- Listar Alugueres | 6- Terminar");
             int opc_principal = sc.nextInt();
             sc.nextLine();
-            if(opc_principal==1) {
+            switch(opc_principal) {
 
-                System.out.println("Informacao do Utilizador : ");
+
+            case 1 :
+                // ao iniciar, a aplicação deve carregar os utilizadores a partir de um
+                //ficheiro de texto (utilizadores.txt)
+                break;
+
+            case 2 :
+            // ao iniciar, a aplicação deve carregar os veículos a partir de um ficheiro
+                //de texto (veículos.txt)
+                case 3 :
+                    //ao iniciar, a aplicação deve carregar os alugueres a partir de um
+                    //ficheiro de objetos (alugueres.obj), caso exista
+                case 4 :
+                    Utilizador a = new Aluguer();
+                    System.out.println("Diga o seu  numero mecanografico : \n");
+                    int nrmec = sc.nextInt();
+
+                    System.out.println("Diga o id do veiculo  : \n");
+                    int id_vc = sc.nextInt();
+                    System.out.println("Diga hora inicio : \n");
+                    int h = sc.nextInt();
+                    int m = sc.nextInt();
+
+                    LocalTime horainicio = LocalTime.of(h,m);
+
+                    System.out.println("Diga hora final : \n");
+                    h = sc.nextInt();
+                    m = sc.nextInt();
+
+                    LocalTime horafinal = LocalTime(h,m);
+
+
+
+                    System.out.println("Informacao do Utilizador : ");
                 System.out.println("Diga a seu cargo na UC : 1 - Estudante | 2 - Funcionario");
                 String info = sc.nextLine();
 
@@ -27,8 +61,6 @@ public class Mobilidade extends Aluguer{
                 if (info.equals("1")) {
                     System.out.println("Diga o seu Nome : \n");
                     String nome = sc.nextLine();
-                    System.out.println("Diga o seu  numero mecanografico : \n");
-                    int nrmec = sc.nextInt();
                     System.out.println("Diga o seu Curso Frequentado : \n");
                     String curso = sc.nextLine();
                     System.out.println("Diga o seu Polo Frequentado : \n");
