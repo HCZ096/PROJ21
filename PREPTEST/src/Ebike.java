@@ -7,7 +7,8 @@ public class Ebike extends VeiculoEletrico{
         return BateriaRemovivel;
     }
 
-    public void setBateriaRemovivel(boolean bateriaRemovivel) {
+
+public void setBateriaRemovivel(boolean bateriaRemovivel) {
         BateriaRemovivel = bateriaRemovivel;
     }
 }

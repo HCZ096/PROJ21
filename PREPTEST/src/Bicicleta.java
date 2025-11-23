@@ -8,8 +8,8 @@ public class Bicicleta extends VeiculoDeAluguer {
         this.duaspessoas = duaspessoas;
     }
 
-    public void setDuaspessoas(boolean duaspessoas) {
-        this.duaspessoas = duaspessoas;
+    public boolean setDuaspessoas(boolean duaspessoas) {
+       return this.duaspessoas = duaspessoas;
     }
 
     public boolean getDuaspessoas() {

@@ -2,10 +2,8 @@ public class Trotinete extends VeiculoEletrico{
 private boolean comLcd;
 
 public Trotinete(){}
-    private boolean comLcd;
-
 public Trotinete(boolean comLcd, int identificador, String localizador){
-    super(identificador, localizador);
+    super();
     this.comLcd = comLcd;
 
     }

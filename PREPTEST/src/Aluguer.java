@@ -80,7 +80,7 @@ public class Aluguer implements Serializable {
         return 0;
     }
 
-    public double valorTotalAluguer(Utilizador utilizador) {
+    public double valorTotalAluguer(Utilizador utilizador,VeiculoDeAluguer veiculo) {
         Duration tempoTotalAluguer = Duration.between(horainicio, horafim);
         double custoviagem;
 

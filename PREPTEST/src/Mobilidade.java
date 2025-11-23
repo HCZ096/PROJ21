@@ -112,13 +112,13 @@ public class Mobilidade {
                     int m = sc.nextInt();
 
                     LocalTime horainicio;
-                    horainicio = new LocalTime(h,m);
+                    horainicio = LocalTime.of(h,m);
 
                     System.out.println("Diga hora final : \n");
                     h = sc.nextInt();
                     m = sc.nextInt();
                     LocalTime horafinal;
-                    horafinal = new LocalTime(h,m);
+                    horafinal = LocalTime.of(h,m);
 
 
 
@@ -201,14 +201,15 @@ public class Mobilidade {
             Bicicleta bicicleta = new Bicicleta();
             System.out.println("Diga a numero de lugares da Bicicleta : | 1 - 1 Lugar | 2 - 2 Lugares \n");
             String opcao =  sc.nextLine();
+
             if("1".equals(opcao)){
-                bicicleta.setLugar("1 Lugares ");
+                bicicleta.setDuaspessoas(false);
                 // associar o objeto bicicleta a bicicleta com duas lugares
 
             }else if("2".equals(opcao)){
-                bicicleta.setLugar("2 Lugares");
+                 bicicleta.setDuaspessoas(true);
             }
-            System.out.println("Nr de Lugares da Bicicleta Alugada : " + bicicleta.getLugar());
+            //System.out.println("Nr de Lugares da Bicicleta Alugada : " + bicicleta.getDuaspessoas());
 
         }
 

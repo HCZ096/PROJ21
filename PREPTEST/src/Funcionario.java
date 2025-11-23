@@ -7,8 +7,25 @@ public class Funcionario extends Utilizador{
         this.anoContrato = anoContrato ;
     }
 
+    public int getAnoContrato() {
+        return anoContrato;
+    }
+    public void setAnoContrato(int anoContrato) {
+        this.anoContrato = anoContrato;
+    }
+
+    public double precoPorHora(Bicicleta b) {
+        return b.getDuaspessoas() ? 3.00 : 2.00;
+    }
+
+    public double precoPorHora(Trotinete t) {
+        return t.getComLcd() ? 2.60 : 2.50;
+    }
 
 
+    public double precoPorHora(Ebike e) {
+        return e.getBateriaRemovivel()? 3.0 : 2.75;
+    }
 
     }
 
