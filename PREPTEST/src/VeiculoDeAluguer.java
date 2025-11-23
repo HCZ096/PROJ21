@@ -27,5 +27,5 @@ public abstract class VeiculoDeAluguer extends Aluguer{
         this.localizador = localizador;
     }
 
-    public abstract double precoPorHora(Utilizador utilizador);
+    //public abstract double precoPorHora(Utilizador utilizador);
 }
