@@ -1,22 +1,25 @@
-import java.util.Scanner;
 
-public class Bicicleta extends VeiculoAluguer{
-    private String lugar;
+public class Bicicleta extends VeiculoDeAluguer {
+    private boolean duaspessoas;
 
-    public Bicicleta(){}
-
-    public Bicicleta(String lugar){
-        this.lugar = lugar;
-
+    public Bicicleta() {}
+    public Bicicleta(boolean duaspessoas, int identificador, String localizador) {
+        super(identificador, localizador);
+        this.duaspessoas = duaspessoas;
     }
-    public String getLugar(){return lugar;}
 
-    public String sLugar(String lugar){
-        return lugar == "1" ? "1 Lugar" : "2 Lugares";}
-
-    public void setLugar(String lugar) {
-        this.lugar = lugar;
+    public void setDuaspessoas(boolean duaspessoas) {
+        this.duaspessoas = duaspessoas;
     }
+
+    public boolean getDuaspessoas() {
+        return duaspessoas;
+    }
+
+    public double precoPorHora(Utilizador utilizador) {
+        return utilizador.precoPorHora(this);
+    }
+
 
     public  String toString(){
         return"Bicicleta";

@@ -1,11 +1,13 @@
 public class Estudante extends Utilizador{
-    private String cursoMatriculado;
+
     private String poloMfrequentado;
+    private String cursoMatriculado;
 
+    public Estudante(){}
 
-    public Estudante(String nome,int id,String cursoMatriculado, String poloMfrequentado){
+    public Estudante(String nome, int id,String cursoMatriculado, String poloMfrequentado) {
 
-       super(nome,id);
+        super(id, nome);
         this.cursoMatriculado = cursoMatriculado;
         this.poloMfrequentado = poloMfrequentado;
     }
@@ -30,49 +32,24 @@ public class Estudante extends Utilizador{
         return op == "1" ? "Cartao" :"Referencia Multibanco";
     }
 
+
+    public double precoPorHora(Bicicleta b) {
+        return b.getDuaspessoas() ? 2.00 : 1;
+    }
+
+    public double precoPorHora(Trotinete t) {
+        return t.getComLcd() ? 1.10 : 1.0;
+    }
+
+
+    public double precoPorHora(Ebike e) {
+        return e.getBateriaRemovivel()? 1.50 : 1.25;
+    }
+
+
     @Override
-    public String toString(){
+    public String toString () {
         return "Estudante";
-    }
-
-
-    public double calcularprecobicicleta(Bicicleta b) {
-        double preco;
-        if (b.getLugar().equals("1 Lugares")) {
-            preco = 1.0;
-            return preco;
-
-        } else if (b.getLugar().equals("2 lugares")) {
-            preco = 2.0;
-            return preco;
-        } else {
-            return 0.0;
-
-
         }
-    }
-    public double calcularprecotrotinete(Trotinete t){
-        double precobase ;
-        if(t.getComLcd() == true){
-            precobase = 1.10;
-            return precobase;}
-            else{
-                precobase = 1.0;
-                return precobase;
-            }
-
-    }
-
-    public double calcularprecoEbike(Ebike e){
-        double precobike;
-        if(e.getBateriaRemovivel() == true){
-                precobike = 1.50;
-            }else{
-             precobike = 1.25;
-        }
-        return 0.0;
-    }
-
-
 }
 

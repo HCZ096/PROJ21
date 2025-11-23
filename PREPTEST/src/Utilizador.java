@@ -1,26 +1,24 @@
+import java.io.Serializable;
 
 public abstract class Utilizador {
-
-    private String nome;
     private int id;
 
 
     public Utilizador() {}
 
-    public Utilizador(String nome, int id) {
-        this.nome = nome;
+    public Utilizador(int id,String nome) {
         this.id = id;
     }
 
-        public String getNome(String nome) {
-            return nome;
-        }
+    public String getNome() {
+        return nome;
+    }
 
-        public void setNome(String nome) {
-            this.nome = nome;
-        }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-        public int getId(int id) {
+    public int getId() {
             return id;
         }
 
@@ -31,17 +29,7 @@ public abstract class Utilizador {
         return "0";
     }
     public String toString(){
-        return " ";
-    }
-    public double calcularprecobicicleta(Bicicleta b){
-        return 0.0;
-    }
-
-    public double calcularprecotrotinete(Trotinete t){
-        return 0.0;
-    }
-    public double calcularprecoEbike(Ebike e){
-        return 0.0;
+        return "Pessoa " + nome +"com id" + id ;
     }
 
 }

@@ -1,12 +1,10 @@
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-
-public class Aluguer {
+public class Aluguer implements Serializable {
     private LocalTime horainicio, horafim, datainicio, datafim, tempoTotalAluguer, diaria;
     private Utilizador utilizador;
-    private VeiculoDeAluguer veiculo;
+    VeiculoDeAluguer veiculo;
     //boolean capacete;
     //boolean luz;
     private String servicosExtra; //Fazer condicao se verdade vai me retornar se foi capacete ou luz.
@@ -23,8 +21,8 @@ public class Aluguer {
         //this.capacete = capacete;
         //this.luz = luz;
         this.diaria = diaria;
-        this.veiculo= new VeiculoDeAluguer();
         this.servicosExtra = servicosExtra;
+       // this.veiculo = new VeiculoDeAluguer();
     }
     public LocalTime getTempoTotalAluguer(){
         return tempoTotalAluguer;
@@ -82,17 +80,17 @@ public class Aluguer {
         return 0;
     }
 
-    public double valotTotalAluguer(Utilizador utilizador) {
+    public double valorTotalAluguer(Utilizador utilizador) {
         Duration tempoTotalAluguer = Duration.between(horainicio, horafim);
-        double custoDiario=0;
+        double custoviagem;
 
         if(tempoTotalAluguer.toHours() > 24) {
             tempoTotalAluguer = Duration.ofHours(8);
-            custoDiario = tempoTotalAluguer.toHours() * utilizador.precoPorHora();
+            custoviagem = tempoTotalAluguer.toHours() * utilizador.precoPorHora(veiculo);
         }else {
-            custoDiario = utilizador.precoPorHora() + precoServicoExtra();
+            custoviagem = utilizador.precoPorHora(veiculo) + precoServicoExtra();
         }
-        return custoDiario;
+        return custoviagem;
     }
 
 
