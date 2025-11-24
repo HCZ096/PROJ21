@@ -1,10 +1,11 @@
-public class Ndocente  extends Funcionario{
-    double p_phora ;
+import java.util.Scanner;
+
+public class Ndocente extends Funcionario{
     private String servico;
+    public Ndocente(){}
     public Ndocente(String nome,int id,int anoContrato,String servico){
         super(nome,id,anoContrato);
         this.servico = servico;
-
     }
 
     public String getServico() {
@@ -14,11 +15,31 @@ public class Ndocente  extends Funcionario{
 
     public double descontoUtilizador(double preco) {
         preco *= (50.0 / 100.0);
-            return  preco;
+        return preco;
+    }
+    public void preencherDadosEspecificos(Scanner sc){//Teste
+        System.out.println("Diga o Ano em que o Contrato Expira : \n");
+        this.anoContrato = sc.nextInt();
+
+        System.out.println("Diga o Servico em que Trabalho: \n");
+        this.servico = sc.nextLine();
+    }
+
+
+    public String toString(){
+        return "Nome : " +" \n" + getNome() +"\n "+ "ID : " + getId() +" \n"+ "Ano de Contrato : " + getAnoContrato() +"\n" + "Servico : " + getServico();
+    }
+
+
+
 
 }
 
-    public double calcularprecobicicleta(Bicicleta b) {
+
+
+
+
+    /*public double calcularprecobicicleta(Bicicleta b) {
         double preco;
         if (b.getLugar().equals("1 Lugares")) {
             preco = 2.0;
@@ -53,4 +74,6 @@ public class Ndocente  extends Funcionario{
         }
     }
 
-}
+     */
+
+

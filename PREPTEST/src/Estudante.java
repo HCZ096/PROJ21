@@ -1,7 +1,9 @@
+import java.util.Scanner;
 public class Estudante extends Utilizador{
 
     private String poloMfrequentado;
     private String cursoMatriculado;
+    private double precoporhora;
 
     public Estudante(){}
 
@@ -31,20 +33,30 @@ public class Estudante extends Utilizador{
     public String metodopagamento(String op) {
         return op == "1" ? "Cartao" :"Referencia Multibanco";
     }
+    public void preencherDadosEspecificos(Scanner sc){//Teste
+        System.out.println("Diga o seu Curso Frequentado : \n");
+        this.cursoMatriculado = sc.nextLine();
 
-
-    public double precoPorHora(Bicicleta b) {
-        return b.getDuaspessoas() ? 2.00 : 1;
+        System.out.println("Diga o seu Polo Frequentado : \n");
+         this.poloMfrequentado = sc.nextLine();
     }
 
-    public double precoPorHora(Trotinete t) {
-        return t.getComLcd() ? 1.10 : 1.0;
-    }
 
+    @Override
+    public double precoPorHora(VeiculoDeAluguer v) {
+        return v.precoPara(this);
 
-    public double precoPorHora(Ebike e) {
-        return e.getBateriaRemovivel()? 1.50 : 1.25;
-    }
+//    public double precoPorHora(Bicicleta b) {
+//        return b.getDuaspessoas() ? 2.00 : 1;
+//    }
+
+//    public double precoPorHora(Trotinete t) {
+//        return t.getComLcd() ? 1.10 : 1.0;
+//    }
+//
+//    public double precoPorHora(Ebike e) {
+//        return e.getBateriaRemovivel()? 1.50 : 1.25;
+   }
 
 
     @Override

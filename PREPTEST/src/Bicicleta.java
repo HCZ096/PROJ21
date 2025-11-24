@@ -8,21 +8,24 @@ public class Bicicleta extends VeiculoDeAluguer {
         this.duaspessoas = duaspessoas;
     }
 
-    public void setDuaspessoas(boolean duaspessoas) {
-        this.duaspessoas = duaspessoas;
+    public boolean setDuaspessoas(boolean duaspessoas) {
+       return this.duaspessoas = duaspessoas;
     }
 
     public boolean getDuaspessoas() {
         return duaspessoas;
     }
 
-    public double precoPorHora(Utilizador utilizador) {
-        return utilizador.precoPorHora(this);
+    public double precoPara(Estudante e) {
+        return this.getDuaspessoas() ? 2.00 : 1;
+    }
+    public double precoPara(Funcionario f) {
+        return this.getDuaspessoas() ? 3.00 : 2.00;
     }
 
 
     public  String toString(){
-        return"Bicicleta";
+        return "bicicleta";
     }
 
         }

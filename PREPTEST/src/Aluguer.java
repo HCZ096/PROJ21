@@ -1,101 +1,117 @@
 import java.io.Serializable;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 public class Aluguer implements Serializable {
-    private LocalTime horainicio, horafim, datainicio, datafim, tempoTotalAluguer, diaria;
+    private LocalDateTime horainicio, horafim;
     private Utilizador utilizador;
-    VeiculoDeAluguer veiculo;
-    //boolean capacete;
-    //boolean luz;
-    private String servicosExtra; //Fazer condicao se verdade vai me retornar se foi capacete ou luz.
+    private VeiculoDeAluguer veiculo;
+    private Estudante estudante;
+    private Funcionario funcionario;
+    private Bicicleta bicicleta;
 
-    public Aluguer() {}
+   // private String servicosExtra; //Fazer condicao se verdade vai me retornar se foi capacete ou luz.
 
-    public Aluguer(LocalTime horafim, LocalTime horainicio, LocalTime datainicio, LocalTime datafim, LocalTime tempoTotalAluguer,
-                   LocalTime diaria, boolean capacete, boolean luz, String servicosExtra) {
+    public  Aluguer() {}
+
+    public Aluguer(VeiculoDeAluguer veiculo,Utilizador utilizador,LocalDateTime horafim, LocalDateTime horainicio
+            ) {
+
+
         this.horainicio = horainicio;
         this.horafim = horafim;
-        this.datainicio = datainicio;
-        this.datafim = datafim;
-        this.tempoTotalAluguer = tempoTotalAluguer;
+        //this.datainicio = datainicio;
+        //this.datafim = datafim;
+        //this.tempoTotalAluguer = tempoTotalAluguer;
         //this.capacete = capacete;
         //this.luz = luz;
-        this.diaria = diaria;
-        this.servicosExtra = servicosExtra;
-       // this.veiculo = new VeiculoDeAluguer();
+        //this.diaria = diaria;
+        //  this.servicosExtra = servicosExtra;
+        this.veiculo = veiculo;
+        this.utilizador = utilizador;
+        //this.identificador = identificador;
+        // this.localizador = localizador;
     }
-    public LocalTime getTempoTotalAluguer(){
-        return tempoTotalAluguer;
-    }
-    public void setTempoTotalAluguer(LocalTime tempoTotalAluguer){
-        this.tempoTotalAluguer = tempoTotalAluguer;
-    }
+//    public LocalTime getTempoTotalAluguer(){
+//        return tempoTotalAluguer;
+//    }
+//    public void setTempoTotalAluguer(LocalTime tempoTotalAluguer){
+//        this.tempoTotalAluguer = tempoTotalAluguer;
+//    }
 
-    public LocalTime getHorainicio() {
+    public LocalDateTime getHorainicio() {
         return horainicio;
     }
 
-    public void setHorainicio(LocalTime horainicio) {
+    public void setHorainicio(LocalDateTime horainicio) {
         this.horainicio = horainicio;
     }
 
-    public LocalTime getHorafim() {
+    public LocalDateTime getHorafim() {
         return horafim;
     }
 
-    public void setHorafim(LocalTime horafim) {
+    public void setHorafim(LocalDateTime horafim) {
         this.horafim = horafim;
     }
 
-    public LocalTime getDatainicio() {
-        return datainicio;
-    }
+//    public LocalTime getDatainicio() {
+//        return datainicio;
+//    }
 
-    public void setDatainicio(LocalTime datainicio) {
-        this.datainicio = datainicio;
-    }
+//    public void setDatainicio(LocalTime datainicio) {
+//        this.datainicio = datainicio;
+//    }
 
-    public LocalTime getDatafim() {
-        return datafim;
-    }
+//    public LocalTime getDatafim() {
+//        return datafim;
+//    }
+//
+//    public void setDatafim(LocalTime datafim) {
+//        this.datafim = datafim;
+//    }
+//
+//    public LocalTime getDiaria() {
+//        return diaria;
+//    }
+//
+//    public void setDiaria(LocalTime diaria) {
+//        this.diaria = diaria;
+//    }
+//
+//         if (servicosExtra.equalsIgnoreCase("capacete")) {
+//            return 5.0;
+//        } else if (servicosExtra.equalsIgnoreCase("luz")) {
+//            return 2.5;
+//        }
+//        return 0;
+//    }
 
-    public void setDatafim(LocalTime datafim) {
-        this.datafim = datafim;
-    }
-
-    public LocalTime getDiaria() {
-        return diaria;
-    }
-
-    public void setDiaria(LocalTime diaria) {
-        this.diaria = diaria;
-    }
-
-    public double precoServicoExtra() {
-        if (servicosExtra.equalsIgnoreCase("capacete")) {
-            return 5.0;
-        } else if (servicosExtra.equalsIgnoreCase("luz")) {
-            return 2.5;
+    public double valorTotalAluguer(VeiculoDeAluguer v, Utilizador u) {
+        if (this.horafim.isBefore(this.horainicio)) {
+            throw new IllegalArgumentException("Hora de fim não pode ser antes da hora de início");
         }
-        return 0;
-    }
 
-    public double valorTotalAluguer(Utilizador utilizador) {
-        Duration tempoTotalAluguer = Duration.between(horainicio, horafim);
-        double custoviagem;
 
-        if(tempoTotalAluguer.toHours() > 24) {
-            tempoTotalAluguer = Duration.ofHours(8);
-            custoviagem = tempoTotalAluguer.toHours() * utilizador.precoPorHora(veiculo);
-        }else {
-            custoviagem = utilizador.precoPorHora(veiculo) + precoServicoExtra();
+            Duration tempoTotalAluguer = Duration.between(this.horainicio, this.horafim);
+
+
+        long horas = tempoTotalAluguer.toHours();
+        double precoHora = u.precoPorHora(v);//no metodo principal ao passar e utilizador (estudante)veiculo(bicicleta) como parametro,era suposto ir
+        double custo ;
+        if (horas > 24) {
+            custo = precoHora * 8;
+        }else{
+            System.out.println("Preco por hora :  " + precoHora);
+            System.out.println("horas : " + horas);
+
+            custo = precoHora * horas;
         }
-        return custoviagem;
+        return custo;
     }
-
 
     public String toString(){
-        return "Data inicio: " + getDatainicio() + "Data fim" + getDatafim() + "Hora inicio: " + getHorainicio() + "Hora fim: " + getHorafim()
-                + "Servico extra?: " + servicosExtra;
+        return "Data inicio: "  + "Data fim" +"Hora inicio: " + getHorainicio() + "Hora fim: " + getHorafim()
+                + "Servico extra?: ";
     }
 }
