@@ -1,9 +1,10 @@
 import java.io.Serializable;
+import java.util.Scanner;
 
 public abstract class Utilizador {
     private int id;
     private String nome;
-
+    private double precoporhora;
 
     public Utilizador() {}
 
@@ -32,12 +33,11 @@ public abstract class Utilizador {
         return "0";
     }
 
+    public void preencherDadosEspecificos(Scanner sc) {
 
-    public abstract double precoPorHora(VeiculoDeAluguer veiculo);
-    public abstract double precoPorHora(Bicicleta b);
-    public abstract double precoPorHora(Trotinete t);
-    public abstract double precoPorHora(Ebike e);
+    }
 
+    public abstract double precoPorHora(VeiculoDeAluguer v);
 
     public String toString(){
         return "Pessoa " + nome +"com id" + id ;

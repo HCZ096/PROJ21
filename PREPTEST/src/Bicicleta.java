@@ -16,13 +16,16 @@ public class Bicicleta extends VeiculoDeAluguer {
         return duaspessoas;
     }
 
-    public double precoPorHora(Utilizador utilizador) {
-        return utilizador.precoPorHora(this);
+    public double precoPara(Estudante e) {
+        return this.getDuaspessoas() ? 2.00 : 1;
+    }
+    public double precoPara(Funcionario f) {
+        return this.getDuaspessoas() ? 3.00 : 2.00;
     }
 
 
     public  String toString(){
-        return"Bicicleta";
+        return "bicicleta";
     }
 
         }

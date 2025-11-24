@@ -19,7 +19,15 @@ public Trotinete(boolean comLcd, int identificador, String localizador){
         return 0;
     }
 
- //   public boolean comLcd(){
+    public double precoPara(Estudante e) {
+        return this.getComLcd() ? 1.10 : 1.0;
+    }
+    public double precoPara(Funcionario f) {
+        return this.getComLcd() ? 2.60 : 2.50;
+    }
+
+
+    //   public boolean comLcd(){
    //     return comLcd;
    // }
 

@@ -1,14 +1,13 @@
 public abstract class VeiculoDeAluguer extends Aluguer{
     private int identificador;
     private String localizador;
-    private Aluguer aluguer;
+    private String tipoVeiculo;
 
     public VeiculoDeAluguer(){};
 
     public VeiculoDeAluguer(int identificador, String localizador){
         this.identificador = identificador;
         this.localizador = localizador;
-        this.aluguer = new Aluguer();
     }
 
     public int getIdentificador() {
@@ -27,5 +26,7 @@ public abstract class VeiculoDeAluguer extends Aluguer{
         this.localizador = localizador;
     }
 
-    //public abstract double precoPorHora(Utilizador utilizador);
+    public abstract double precoPara(Estudante e);
+    public abstract double precoPara(Funcionario f);
+
 }
