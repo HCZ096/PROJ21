@@ -64,10 +64,10 @@ public class Aluguer implements Serializable {
         if (horas > 24) {
             long dias = (horas + 23) / 24;  //Isto arredonda os valores para frente
             total = dias * (8 * precoBaseHora);
-            total += dias * getPrecoServicoExtraDia();
+            total += dias * getPrecoServicoExtraDia(horas);
         } else {
             total = precoBaseHora * horas;
-            total += getPrecoServicoExtraDia() * (horas / 24.0);
+            total += getPrecoServicoExtraDia(horas) * (horas / 24.0);
         }
 
         //Desconto para nao docentes
