@@ -1,8 +1,10 @@
-import javax.imageio.stream.FileImageInputStream;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalTime;
+
+
+
 
 public class Mobilidade {
 
@@ -147,7 +149,7 @@ public class Mobilidade {
                     if (i == 2) {
                         System.out.println("Diga o seu Servico : \n");
                         String ser = sc.nextLine();
-                        Ndocente ndocente = new Ndocente(F_nome, F_nrmec, F_anoC, ser);
+                        Naodocente naodocente = new Naodocente(F_nome, F_nrmec, F_anoC, ser);
                     } else if (i == 1) {
                         Docente docente = new Docente(F_nome, F_nrmec, F_anoC);// objeto criado
                         boolean op = true;
@@ -187,7 +189,7 @@ public class Mobilidade {
 */
 //TESTE
 // no ato de decidir qual veiculo o utilizador escolheu;'
-
+/*
         System.out.println("Diga o tipo de veicuilo: | 1 - Bicicleta | 2 - Trotinete | 3 - Ebike \n");
         String tipo = sc.nextLine();
 
@@ -203,11 +205,11 @@ public class Mobilidade {
             String opcao =  sc.nextLine();
 
             if("1".equals(opcao)){
-                bicicleta.setDuaspessoas(false);
+                bicicleta.setUmaPessoa(false);
                 // associar o objeto bicicleta a bicicleta com duas lugares
 
             }else if("2".equals(opcao)){
-                 bicicleta.setDuaspessoas(true);
+                 bicicleta.setUmaPessoa(true);
             }
             //System.out.println("Nr de Lugares da Bicicleta Alugada : " + bicicleta.getDuaspessoas());
 
@@ -229,7 +231,8 @@ public class Mobilidade {
 
 
 
-}
 
 }
 
+}
+/*

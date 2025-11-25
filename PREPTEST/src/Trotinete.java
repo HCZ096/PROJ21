@@ -1,13 +1,14 @@
-public class Trotinete extends VeiculoEletrico{
-private boolean comLcd;
+public class Trotinete extends VeiculoEletrico {
+    private boolean comLcd;
 
-public Trotinete(){}
-public Trotinete(boolean comLcd, int identificador, String localizador){
-    super();
-    this.comLcd = comLcd;
+//public Trotinete(){}
 
+    public Trotinete(int id, String localizador, int nivelDeBateria, boolean comLcd) {
+        super(id, localizador, nivelDeBateria);
+        this.comLcd = comLcd;
     }
-    public boolean getComLcd() {
+
+    public boolean isComLcd() {
         return comLcd;
     }
 
@@ -15,17 +16,14 @@ public Trotinete(boolean comLcd, int identificador, String localizador){
         this.comLcd = comLcd;
     }
 
-    public int niveldaBateria(){
-        return 0;
+    @Override
+    public double precoPorHoraPara(Utilizador u) {
+        return u.precoPorHora(this);
     }
 
- //   public boolean comLcd(){
-   //     return comLcd;
-   // }
-
-    //public double precoPorHora(Trotinete t){
-       // return t.precoPorHoraPara(this);
-    //}
+    public String toString() {
+        return "Trotinete -- ID: " + getId() + ", Localizador" +  getLocalizador() + ", Bateria: " + getNivelDeBateria() + "%" + (comLcd ? " com LCD" : "Sem LCD");
+    }
 }
 
 

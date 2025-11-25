@@ -1,8 +1,8 @@
 public class Funcionario extends Utilizador{
-    protected int anoContrato;
+    private int anoContrato;
 
-    public Funcionario(){}
-    public Funcionario(String nome, int id,int anoContrato) {
+    //public Funcionario(){}
+    public Funcionario(int id, String nome,  int anoContrato) {
         super(id, nome);
         this.anoContrato = anoContrato ;
     }
@@ -10,22 +10,26 @@ public class Funcionario extends Utilizador{
     public int getAnoContrato() {
         return anoContrato;
     }
+
     public void setAnoContrato(int anoContrato) {
         this.anoContrato = anoContrato;
     }
 
     public double precoPorHora(Bicicleta b) {
-        return b.getDuaspessoas() ? 3.00 : 2.00;
+        return b.isUmaPessoa() ? 3.00 : 2.00;
     }
 
     public double precoPorHora(Trotinete t) {
-        return t.getComLcd() ? 2.60 : 2.50;
+        return t.isComLcd() ? 2.60 : 2.50;
     }
 
 
     public double precoPorHora(Ebike e) {
-        return e.getBateriaRemovivel()? 3.0 : 2.75;
+        return e.isBateriaRemovivel()? 3.0 : 2.75;
     }
 
+    public String toString(){
+        return "Funcionario: " + getNome() + "| ID: " + getId() + "| AnoContrato: " + getAnoContrato();
     }
+}
 

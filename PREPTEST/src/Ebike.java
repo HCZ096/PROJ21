@@ -1,16 +1,27 @@
-import java.util.Scanner;
-
 public class Ebike extends VeiculoEletrico{
-    private boolean BateriaRemovivel ;
+    private boolean bateriaRemovivel ;
 
-    public boolean getBateriaRemovivel() {
-        return BateriaRemovivel;
+    public Ebike(int id, String localizador, int nivelDeBateria, boolean bateriaRemovivel) {
+        super(id, localizador, nivelDeBateria);
+        this.bateriaRemovivel = bateriaRemovivel;
     }
 
-
-public void setBateriaRemovivel(boolean bateriaRemovivel) {
-        BateriaRemovivel = bateriaRemovivel;
+    public boolean isBateriaRemovivel() {
+        return bateriaRemovivel;
     }
+
+    public void setBateriaRemovivel(boolean bateriaRemovivel) {
+        this.bateriaRemovivel = bateriaRemovivel;
+    }
+
+    public double precoHoraPara(Utilizador u){
+        return u.precoPorHora(this);
+    }
+
+    public String toString(){
+        return "ID: " + getId() + ", Localizador: " + getLocalizador() + "Nivel de Bateria: " + getNivelDeBateria() + (bateriaRemovivel ? "Bateria removivel" : "Bateria fixa");
+    }
+
 }
 
 

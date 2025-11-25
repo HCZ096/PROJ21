@@ -1,101 +1,85 @@
 import java.io.Serializable;
 import java.time.Duration;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+
 public class Aluguer implements Serializable {
-    private LocalTime horainicio, horafim, datainicio, datafim, tempoTotalAluguer, diaria;
+    private LocalDateTime inicio;
+    private LocalDateTime fim;
+
     private Utilizador utilizador;
-    VeiculoDeAluguer veiculo;
-    //boolean capacete;
-    //boolean luz;
-    private String servicosExtra; //Fazer condicao se verdade vai me retornar se foi capacete ou luz.
+    private VeiculoDeAluguer veiculo;
 
-    public Aluguer() {}
+    private boolean capacete;
+    private boolean luz;
 
-    public Aluguer(LocalTime horafim, LocalTime horainicio, LocalTime datainicio, LocalTime datafim, LocalTime tempoTotalAluguer,
-                   LocalTime diaria, boolean capacete, boolean luz, String servicosExtra) {
-        this.horainicio = horainicio;
-        this.horafim = horafim;
-        this.datainicio = datainicio;
-        this.datafim = datafim;
-        this.tempoTotalAluguer = tempoTotalAluguer;
-        //this.capacete = capacete;
-        //this.luz = luz;
-        this.diaria = diaria;
-        this.servicosExtra = servicosExtra;
-       // this.veiculo = new VeiculoDeAluguer();
-    }
-    public LocalTime getTempoTotalAluguer(){
-        return tempoTotalAluguer;
-    }
-    public void setTempoTotalAluguer(LocalTime tempoTotalAluguer){
-        this.tempoTotalAluguer = tempoTotalAluguer;
+    private String metodoDePagamento;
+
+    //public Aluguer() {}
+    public Aluguer(Utilizador utilizador, VeiculoDeAluguer veiculo, LocalDateTime inicio, LocalDateTime fim, boolean capacete, boolean luz, String metodoDePagamento) {
+        this.utilizador = utilizador;
+        this.veiculo = veiculo;
+        this.inicio = inicio;
+        this.fim = fim;
+        this.capacete = capacete;
+        this.luz = luz;
+        this.metodoDePagamento = metodoDePagamento;
     }
 
-    public LocalTime getHorainicio() {
-        return horainicio;
-    }
+    public double getPrecoServicoExtraHora() {
+        double total = 0;
 
-    public void setHorainicio(LocalTime horainicio) {
-        this.horainicio = horainicio;
-    }
-
-    public LocalTime getHorafim() {
-        return horafim;
-    }
-
-    public void setHorafim(LocalTime horafim) {
-        this.horafim = horafim;
-    }
-
-    public LocalTime getDatainicio() {
-        return datainicio;
-    }
-
-    public void setDatainicio(LocalTime datainicio) {
-        this.datainicio = datainicio;
-    }
-
-    public LocalTime getDatafim() {
-        return datafim;
-    }
-
-    public void setDatafim(LocalTime datafim) {
-        this.datafim = datafim;
-    }
-
-    public LocalTime getDiaria() {
-        return diaria;
-    }
-
-    public void setDiaria(LocalTime diaria) {
-        this.diaria = diaria;
-    }
-
-    public double precoServicoExtra() {
-        if (servicosExtra.equalsIgnoreCase("capacete")) {
-            return 5.0;
-        } else if (servicosExtra.equalsIgnoreCase("luz")) {
-            return 2.5;
+        if (capacete) {
+            total += 5.0;
         }
-        return 0;
-    }
-
-    public double valorTotalAluguer(Utilizador utilizador,VeiculoDeAluguer veiculo) {
-        Duration tempoTotalAluguer = Duration.between(horainicio, horafim);
-        double custoviagem;
-
-        if(tempoTotalAluguer.toHours() > 24) {
-            tempoTotalAluguer = Duration.ofHours(8);
-            custoviagem = tempoTotalAluguer.toHours() * utilizador.precoPorHora(veiculo);
-        }else {
-            custoviagem = utilizador.precoPorHora(veiculo) + precoServicoExtra();
+        if (luz) {
+            total += 2.5;
         }
-        return custoviagem;
+        return total;
+    }
+
+    public double getPrecoServicoExtraDia(long horas) {
+        double total = 0;
+
+        //Servicos cobrados diariamente
+        if(capacete) {
+            total += 5.0;
+        }
+        if(luz) {
+            total += 2.5;
+        }
+
+        //E se for apenas por horas (<24 horas), cobramos de forma justa
+        return total * (horas / 24.0);
+    }
+
+    public double valorTotalAluguer(Utilizador u, VeiculoDeAluguer veiculo) {
+        long horas = Duration.between(inicio, fim).toHours();
+        if (horas == 0) {
+            horas = 1;  //Isso apenas para ter no minimo uma hora, pois a contagem é por hora
+        }
+
+        double precoBaseHora = veiculo.precoPorHoraPara(utilizador);
+        double total;
+
+        if (horas > 24) {
+            long dias = (horas + 23) / 24;  //Isto arredonda os valores para frente
+            total = dias * (8 * precoBaseHora);
+            total += dias * getPrecoServicoExtraDia();
+        } else {
+            total = precoBaseHora * horas;
+            total += getPrecoServicoExtraDia() * (horas / 24.0);
+        }
+
+        //Desconto para nao docentes
+        if (utilizador.temDesconto50()) {
+            total *= 0.5;
+        }
+        return total;
     }
 
 
-    public String toString(){
-        return "Data inicio: " + getDatainicio() + "Data fim" + getDatafim() + "Hora inicio: " + getHorainicio() + "Hora fim: " + getHorafim()
-                + "Servico extra?: " + servicosExtra;
+    public String toString() {
+            return "Aluguer: " + utilizador.getNome() + "Utiliador: " + "Veiculo: " + veiculo + "Inicio: " +  inicio + "Fim: " + fim +
+                    "Capacete: " + capacete + "Luz: " + luz + "Metodo Pagamento: " + "Total: " + valorTotalAluguer() + "%";
     }
 }

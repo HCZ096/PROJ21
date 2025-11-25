@@ -1,31 +1,31 @@
 
 public class Bicicleta extends VeiculoDeAluguer {
-    private boolean duaspessoas;
+    private boolean umaPessoa;
 
-    public Bicicleta() {}
-    public Bicicleta(boolean duaspessoas, int identificador, String localizador) {
-        super(identificador, localizador);
-        this.duaspessoas = duaspessoas;
+    //public Bicicleta() {};
+
+    public Bicicleta(boolean umaPessoa, int id, String localizador) {
+        super(id, localizador);
+        this.umaPessoa = umaPessoa;
     }
 
-    public boolean setDuaspessoas(boolean duaspessoas) {
-       return this.duaspessoas = duaspessoas;
+    public boolean isUmaPessoa() {
+        return umaPessoa;
     }
 
-    public boolean getDuaspessoas() {
-        return duaspessoas;
+    public void setUmaPessoa(boolean umaPessoa) {
+       this.umaPessoa = umaPessoa;
     }
 
-    public double precoPorHora(Utilizador utilizador) {
-        return utilizador.precoPorHora(this);
+    public double precoPorHoraPara(Utilizador u) {
+        return u.precoPorHora(this);
     }
 
 
     public  String toString(){
-        return"Bicicleta";
+        return"Bicicleta -- | ID: " + getId() + "| " + (umaPessoa ? "1 Pessoa" : "2 Pessoas") ;
     }
-
-        }
+}
 
 
 

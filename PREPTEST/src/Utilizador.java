@@ -26,21 +26,20 @@ public abstract class Utilizador {
 
     public void setId(int id) {
             this.id = id;
-        }
-
-    public String metodopagamento(){
-        return "0";
     }
 
-
-    public abstract double precoPorHora(VeiculoDeAluguer veiculo);
+    //Preco por hora determinado pelas suas classes
     public abstract double precoPorHora(Bicicleta b);
     public abstract double precoPorHora(Trotinete t);
     public abstract double precoPorHora(Ebike e);
 
+    public boolean temDesconto50(){
+        return false;
+    }
+
 
     public String toString(){
-        return "Pessoa " + nome +"com id" + id ;
+        return "Utilizador " + nome + "(ID: " + id + ")";
     }
 
 

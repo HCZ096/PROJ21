@@ -1,18 +1,20 @@
- abstract public class VeiculoEletrico extends VeiculoAluguer  {
+public abstract class VeiculoEletrico extends VeiculoDeAluguer  {
+    private int nivelDeBateria;
 
+    //public VeiculoEletrico(){}
 
-    public VeiculoEletrico(){}
-    public VeiculoEletrico(int identificador, String localizador){
-        super.setIdentificador(identificador);
-        super.setLocalizador(localizador);
+    public VeiculoEletrico(int id, String localizador,  int nivelDeBateria) {
+        super(id, localizador);
+        this.nivelDeBateria = nivelDeBateria;
     }
-    public int niveldaBateria(){
-        return 0 ;
+    public int getNivelDeBateria(){
+        return nivelDeBateria ;
+    }
+    public void setNivelDeBateria(int nivelDeBateria){
+        this.nivelDeBateria = nivelDeBateria;
     }
 
-
-
-
-
-
+    public String toString() {
+        return "Id: " + getId() + ", Localizador: " + getLocalizador() + ", NivelDeBateria: " + getNivelDeBateria() + "%";
+    }
 }
