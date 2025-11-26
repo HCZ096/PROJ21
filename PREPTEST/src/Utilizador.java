@@ -39,7 +39,7 @@ public abstract class Utilizador {
 
 
     public String toString(){
-        return "Utilizador " + nome + "(ID: " + id + ")";
+        return "Utilizador " + nome + "(ID: " + id + ")" +"\n";
     }
 
 

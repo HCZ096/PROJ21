@@ -30,6 +30,6 @@ public abstract class VeiculoDeAluguer{
     public abstract double precoPorHoraPara(Utilizador u);
 
     public String toString() {
-        return "ID: " + getId() + ", Localizador: " + getLocalizador();
+        return "ID: " + getId() + ", Localizador: " + getLocalizador() +"\n";
     }
 }

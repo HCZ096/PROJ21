@@ -18,8 +18,13 @@ public class Ebike extends VeiculoEletrico{
         return u.precoPorHora(this);
     }
 
+    @Override
+    public double precoPorHoraPara(Utilizador u) {
+        return 0;
+    }
+
     public String toString(){
-        return "ID: " + getId() + ", Localizador: " + getLocalizador() + "Nivel de Bateria: " + getNivelDeBateria() + (bateriaRemovivel ? "Bateria removivel" : "Bateria fixa");
+        return "ID: " + getId() + ", Localizador: " + getLocalizador() + "Nivel de Bateria: " + getNivelDeBateria() + (bateriaRemovivel ? "Bateria removivel" : "Bateria fixa") +"\n";
     }
 
 }

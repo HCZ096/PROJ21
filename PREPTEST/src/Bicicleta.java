@@ -23,7 +23,7 @@ public class Bicicleta extends VeiculoDeAluguer {
 
 
     public  String toString(){
-        return"Bicicleta -- | ID: " + getId() + "| " + (umaPessoa ? "1 Pessoa" : "2 Pessoas") ;
+        return"Bicicleta -- | ID: " + getId() + "| " + (umaPessoa ? "1 Pessoa" : "2 Pessoas") +"\n";
     }
 }
 

@@ -19,7 +19,7 @@ public class Naodocente extends Funcionario{
     }
 
     public String toString(){
-        return "| ID: " + getId() + "| Nome: " + getNome() + "| AnoContrato: " + getAnoContrato() +  "| Servico: " + getServico() ;
+        return "| ID: " + getId() + "| Nome: " + getNome() + "| AnoContrato: " + getAnoContrato() +  "| Servico: " + getServico()  +"\n";
     }
 }
 

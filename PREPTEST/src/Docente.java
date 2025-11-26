@@ -22,7 +22,7 @@ public class Docente extends Funcionario {
     }
 
     public String toString(){
-        return "Docente: " + getNome() + "| ID: " + getId() + "| Ano de Contrato: " +  getAnoContrato();
+        return "Docente: " + getNome() + "| ID: " + getId() + "| Ano de Contrato: " +  getAnoContrato() +"\n";
     }
 
 }

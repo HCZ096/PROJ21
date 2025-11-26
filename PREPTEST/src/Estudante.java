@@ -41,7 +41,7 @@ public class Estudante extends Utilizador{
 
     @Override
     public String toString () {
-        return "Estudante" + getNome() + "ID: " + getId() + "Curso: " + getCursoMatriculado() + "Polo: " + getPoloMfrequentado() ;
+        return "Estudante: " + getNome() + " | ID: " + getId() + " | Curso: " + getCursoMatriculado() + " | Polo: " + getPoloMfrequentado() +"\n";
         }
 }
 

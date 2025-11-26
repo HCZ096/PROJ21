@@ -22,7 +22,7 @@ public class Trotinete extends VeiculoEletrico {
     }
 
     public String toString() {
-        return "Trotinete -- ID: " + getId() + ", Localizador" +  getLocalizador() + ", Bateria: " + getNivelDeBateria() + "%" + (comLcd ? " com LCD" : "Sem LCD");
+        return "Trotinete -- ID: " + getId() + ", Localizador" +  getLocalizador() + ", Bateria: " + getNivelDeBateria() + "%" + (comLcd ? " com LCD" : "Sem LCD") +"\n";
     }
 }
 

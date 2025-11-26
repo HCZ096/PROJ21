@@ -14,7 +14,7 @@ public class Aluguer implements Serializable {
 
     private String metodoDePagamento;
 
-    //public Aluguer() {}
+    public Aluguer() {}
     public Aluguer(Utilizador utilizador, VeiculoDeAluguer veiculo, LocalDateTime inicio, LocalDateTime fim, boolean capacete, boolean luz, String metodoDePagamento) {
         this.utilizador = utilizador;
         this.veiculo = veiculo;
@@ -69,7 +69,6 @@ public class Aluguer implements Serializable {
             total = precoBaseHora * horas;
             total += getPrecoServicoExtraDia(horas) * (horas / 24.0);
         }
-
         //Desconto para nao docentes
         if (utilizador.temDesconto50()) {
             total *= 0.5;
@@ -79,7 +78,8 @@ public class Aluguer implements Serializable {
 
 
     public String toString() {
-            return "Aluguer: " + utilizador.getNome() + "Utiliador: " + "Veiculo: " + veiculo + "Inicio: " +  inicio + "Fim: " + fim +
-                    "Capacete: " + capacete + "Luz: " + luz + "Metodo Pagamento: " + "Total: " + valorTotalAluguer() + "%";
+            return "Utilizador: " + utilizador + "Veiculo" + veiculo +  " | Veiculo: " + veiculo + " | HoraInicio: " +  inicio + " | HoraFim: " + fim +
+                    " | Capacete: " + capacete + " | Luz: " + luz + " | Metodo Pagamento: " +  "\n";
     }
+
 }

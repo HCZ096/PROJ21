@@ -15,6 +15,6 @@ public abstract class VeiculoEletrico extends VeiculoDeAluguer  {
     }
 
     public String toString() {
-        return "Id: " + getId() + ", Localizador: " + getLocalizador() + ", NivelDeBateria: " + getNivelDeBateria() + "%";
+        return "Id: " + getId() + ", Localizador: " + getLocalizador() + ", NivelDeBateria: " + getNivelDeBateria() + "%" +"\n";
     }
 }

@@ -29,7 +29,7 @@ public class Funcionario extends Utilizador{
     }
 
     public String toString(){
-        return "Funcionario: " + getNome() + "| ID: " + getId() + "| AnoContrato: " + getAnoContrato();
+        return "Funcionario: " + getNome() + "| ID: " + getId() + "| AnoContrato: " + getAnoContrato() + "\n";
     }
 }
 
