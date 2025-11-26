@@ -7,7 +7,6 @@ public class Ebike extends VeiculoEletrico{
     public Ebike(){}
 
     public Ebike( int nivelDeBateria, boolean BateriaRemovivel){
-        super.getNivelDeBateria();
         this.BateriaRemovivel = BateriaRemovivel;
     }
 
@@ -26,7 +25,7 @@ public class Ebike extends VeiculoEletrico{
     }
 
     public String toString(){
-        return "Tpo de Veiculo : Ebike;" + "\n" +"Bateria Removivel : " + getBateriaRemovivel() +"\n "+ "Nivel de bateria : " + getNivelDeBateria();
+        return "Tpo de Veiculo : Ebike;" + "\n" +"Bateria Removivel : " + getBateriaRemovivel() +"\n "+ "Nivel de bateria : " ;
     }
 }
 
