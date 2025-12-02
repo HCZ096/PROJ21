@@ -25,7 +25,7 @@ public class Bicicleta extends VeiculoDeAluguer {
 
 
     public  String toString(){
-        return "bicicleta";
+        return "Bicicleta";
     }
 
         }

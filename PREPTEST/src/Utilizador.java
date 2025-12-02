@@ -33,9 +33,6 @@ public abstract class Utilizador {
         return "0";
     }
 
-    public void preencherDadosEspecificos(Scanner sc) {
-
-    }
 
     public abstract double precoPorHora(VeiculoDeAluguer v);
 

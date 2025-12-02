@@ -27,7 +27,7 @@ public class Ndocente extends Funcionario{
 
 
     public String toString(){
-        return "Nome : " +" \n" + getNome() +"\n "+ "ID : " + getId() +" \n"+ "Ano de Contrato : " + getAnoContrato() +"\n" + "Servico : " + getServico();
+        return "Nome : " +" " + getNome() +" "+ "ID : " + getId() +"  "+ "Ano de Contrato : " + getAnoContrato() +" " + "Servico : " + getServico();
     }
 
 

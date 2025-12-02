@@ -3,8 +3,9 @@ private boolean comLcd;
 
 public Trotinete(){}
 public Trotinete(boolean comLcd, int identificador, String localizador){
-    super();
+    super(identificador, localizador);
     this.comLcd = comLcd;
+
 
     }
     public boolean getComLcd() {
