@@ -2,8 +2,8 @@ public class Trotinete extends VeiculoEletrico{
 private boolean comLcd;
 
 public Trotinete(){}
-public Trotinete(boolean comLcd, int identificador, String localizador){
-    super(identificador, localizador);
+public Trotinete(boolean comLcd, int identificador, String localizador,String nivelBateria){
+    super(identificador, localizador,nivelBateria);
     this.comLcd = comLcd;
 
 
@@ -20,7 +20,9 @@ public Trotinete(boolean comLcd, int identificador, String localizador){
         return 0;
     }
 
-    public double precoPara(Estudante e) {
+    public double precoPara(Utilizador u) {
+        return u.precoPorHora(this);
+    }    public double precoPara(Estudante e) {
         return this.getComLcd() ? 1.10 : 1.0;
     }
     public double precoPara(Funcionario f) {

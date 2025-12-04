@@ -2,14 +2,12 @@ import java.util.Scanner;
 
 public class Ebike extends VeiculoEletrico{
     private boolean BateriaRemovivel ;
-    private int nivelDeBateria;
 
     public Ebike(){}
 
-    public Ebike( int nivelDeBateria, boolean BateriaRemovivel, int identificador, String localizador){
-        super(identificador, localizador);
+    public Ebike(int identificador, String localizador,String nivelbateria,boolean BateriaRemovivel){
+        super(identificador,localizador,nivelbateria);
         this.BateriaRemovivel = BateriaRemovivel;
-        this.nivelDeBateria = nivelDeBateria;
     }
 
     public boolean getBateriaRemovivel() {
@@ -18,6 +16,10 @@ public class Ebike extends VeiculoEletrico{
 
     public void setBateriaRemovivel(boolean bateriaRemovivel) {
         BateriaRemovivel = bateriaRemovivel;
+    }
+
+    public double precoPara(Utilizador u) {
+        return u.precoPorHora(this);
     }
     public double precoPara(Estudante e) {
         return this.getBateriaRemovivel()? 1.50 : 1.25;

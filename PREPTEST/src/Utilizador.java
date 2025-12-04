@@ -4,13 +4,15 @@ import java.util.Scanner;
 public abstract class Utilizador {
     private int id;
     private String nome;
-    private double precoporhora;
+    protected String metodopagamento;
+
 
     public Utilizador() {}
 
-    public Utilizador(int id,String nome) {
+    public Utilizador(int id,String nome,String metodopagamento) {
         this.id = id;
         this.nome = nome;
+        this.metodopagamento = metodopagamento;
     }
 
     public String getNome() {
@@ -29,10 +31,13 @@ public abstract class Utilizador {
             this.id = id;
         }
 
-    public String metodopagamento(){
-        return "0";
+    public String getMetodopagamento() {
+        return metodopagamento;
     }
 
+    public void setMetodopagamento(String metodopagamento) {
+        this.metodopagamento = metodopagamento;
+    }
 
     public abstract double precoPorHora(VeiculoDeAluguer v);
 

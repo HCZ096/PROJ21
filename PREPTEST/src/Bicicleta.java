@@ -1,30 +1,37 @@
 
 public class Bicicleta extends VeiculoDeAluguer {
-    private boolean duaspessoas;
+    private boolean assentos;
 
     public Bicicleta() {}
-    public Bicicleta(boolean duaspessoas, int identificador, String localizador) {
-        super(identificador, localizador);
-        this.duaspessoas = duaspessoas;
+
+    public Bicicleta(boolean assentos, int identificador, String localizador) {
+        super(identificador,
+                localizador);
+        this.assentos = assentos;
     }
 
-    public boolean setDuaspessoas(boolean duaspessoas) {
-       return this.duaspessoas = duaspessoas;
+    public boolean setassentos(boolean assentos) {
+       return this.assentos = assentos;
     }
 
-    public boolean getDuaspessoas() {
-        return duaspessoas;
+    public boolean getassentos() {
+        return assentos;
+    }
+
+    @Override
+    public double precoPara(Utilizador u) {
+        return u.precoPorHora(this);
     }
 
     public double precoPara(Estudante e) {
-        return this.getDuaspessoas() ? 2.00 : 1;
+        return this.getassentos() ? 2.00 : 1;
     }
     public double precoPara(Funcionario f) {
-        return this.getDuaspessoas() ? 3.00 : 2.00;
+        return this.getassentos() ? 3.00 : 2.00;
     }
 
 
-    public  String toString(){
+    public String toString(){
         return "Bicicleta";
     }
 

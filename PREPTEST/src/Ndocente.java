@@ -3,31 +3,29 @@ import java.util.Scanner;
 public class Ndocente extends Funcionario{
     private String servico;
     public Ndocente(){}
-    public Ndocente(String nome,int id,int anoContrato,String servico){
-        super(nome,id,anoContrato);
+    public Ndocente(String nome,int id,String metodopagamento,int anoContrato,String servico){
+        super(nome,id,metodopagamento,anoContrato);
         this.servico = servico;
     }
 
     public String getServico() {
         return servico;
     }
-    public void setServico(String servico) {}
+    public String setServico(String servico) {
+        return this.servico = servico;
+    }
 
     public double descontoUtilizador(double preco) {
         preco *= (50.0 / 100.0);
         return preco;
     }
-    public void preencherDadosEspecificos(Scanner sc){//Teste
-        System.out.println("Diga o Ano em que o Contrato Expira : \n");
-        this.anoContrato = sc.nextInt();
-
-        System.out.println("Diga o Servico em que Trabalho: \n");
-        this.servico = sc.nextLine();
-    }
-
 
     public String toString(){
-        return "Nome : " +" " + getNome() +" "+ "ID : " + getId() +"  "+ "Ano de Contrato : " + getAnoContrato() +" " + "Servico : " + getServico();
+        return "Nome : " +" " + getNome() +"\n "+
+                "ID : " + getId() +"\n "+
+                "Metodo de Pagamento : " + getMetodopagamento() + "\n" +
+                "Ano de Contrato : " + getAnoContrato() + "\n " +
+                "Servico : " + getServico();
     }
 
 
@@ -35,45 +33,5 @@ public class Ndocente extends Funcionario{
 
 }
 
-
-
-
-
-    /*public double calcularprecobicicleta(Bicicleta b) {
-        double preco;
-        if (b.getLugar().equals("1 Lugares")) {
-            preco = 2.0;
-            return descontoUtilizador(preco);
-
-        } else if (b.getLugar().equals("2 lugares")) {
-            preco = 3.0;
-            return descontoUtilizador(preco);
-        } else {
-            return 0.0;
-        }
-    }
-    public double calcularprecotrotinete(Trotinete t){
-        double precobase ;
-        if(t.getComLcd() == true){
-            precobase = 2.60;
-            return descontoUtilizador(precobase);}
-        else{
-            precobase = 2.50;
-            return descontoUtilizador(precobase);
-        }
-
-    }
-    public double calcularprecoEbike(Ebike e){
-        double precobike;
-        if(e.getBateriaRemovivel() == true){
-            precobike = 3.0;
-            return descontoUtilizador(precobike);
-        }else{
-            precobike = 2.75;
-            return descontoUtilizador(precobike);
-        }
-    }
-
-     */
 
 
