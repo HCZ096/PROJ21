@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public abstract class VeiculoDeAluguer extends Aluguer implements Serializable {
+public abstract class VeiculoDeAluguer implements Serializable {
 
     private int identificador;
     private String localizador;
@@ -13,12 +13,8 @@ public abstract class VeiculoDeAluguer extends Aluguer implements Serializable {
 
     }
 
-    public int getIdentificador() {
+    public int getId(){
         return identificador;
-    }
-
-    public void setIdentificador(int identificador) {
-        this.identificador = identificador;
     }
 
     public String getLocalizador() {
@@ -29,9 +25,8 @@ public abstract class VeiculoDeAluguer extends Aluguer implements Serializable {
         this.localizador = localizador;
     }
 
-    public abstract double precoPara(Utilizador u);
     public abstract double precoPara(Estudante e);
     public abstract double precoPara(Funcionario f);
 
-   // public abstract boolean setassentos(boolean assento);
+
 }

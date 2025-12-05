@@ -1,13 +1,9 @@
-import java.util.Scanner;
 public class Estudante extends Utilizador{
 
     private String poloMfrequentado;
     private String cursoMatriculado;
 
-
-    public Estudante(){}
-
-    public Estudante(String nome, int id,String metodopagamento,String cursoMatriculado, String poloMfrequentado) {
+    public Estudante(int id, String nome,String metodopagamento,String cursoMatriculado, String poloMfrequentado) {
 
         super(id, nome,metodopagamento);
         this.cursoMatriculado = cursoMatriculado;
@@ -29,10 +25,7 @@ public class Estudante extends Utilizador{
     public void setPoloMfrequentado(String poloMfrequentado) {
         this.poloMfrequentado = poloMfrequentado;
     }
-    @Override
-    public double descontoUtilizador(double preco) {
-        return preco;
-    }
+
 
 
     @Override
@@ -47,4 +40,3 @@ public class Estudante extends Utilizador{
                 "Polo mais Frequentado :" + " " + getPoloMfrequentado() + "\n";
         }
 }
-
