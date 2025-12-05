@@ -5,7 +5,7 @@ abstract public class Funcionario extends Utilizador{
 
     public Funcionario(){}
 
-    public Funcionario(String nome, int id,String metodopagamento,int anoContrato) {
+    public Funcionario(int id, String nome,String metodopagamento,int anoContrato) {
         super(id, nome,metodopagamento);
         this.anoContrato = anoContrato ;
     }
@@ -24,4 +24,3 @@ abstract public class Funcionario extends Utilizador{
 
 
 }
-

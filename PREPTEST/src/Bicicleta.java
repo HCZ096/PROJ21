@@ -4,10 +4,10 @@ public class Bicicleta extends VeiculoDeAluguer {
 
     public Bicicleta() {}
 
-    public Bicicleta(boolean assentos, int identificador, String localizador) {
+    public Bicicleta(int identificador, String localizador, int lugares) {
         super(identificador,
                 localizador);
-        this.assentos = assentos;
+        this.assentos = lugares > 1;
     }
 
     public boolean setassentos(boolean assentos) {
@@ -36,7 +36,6 @@ public class Bicicleta extends VeiculoDeAluguer {
     }
 
         }
-
 
 
 

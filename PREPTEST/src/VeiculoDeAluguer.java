@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public abstract class VeiculoDeAluguer extends Aluguer implements Serializable {
+public abstract class VeiculoDeAluguer implements Serializable {
 
     private int identificador;
     private String localizador;
@@ -14,6 +14,10 @@ public abstract class VeiculoDeAluguer extends Aluguer implements Serializable {
     }
 
     public int getIdentificador() {
+        return identificador;
+    }
+
+    public int getId(){
         return identificador;
     }
 

@@ -330,15 +330,15 @@ public class Mobilidade {
         return null;
     }
 
-    private static Veiculo procurarVeiculo(int id) {
-        for (Veiculo v : listaVeiculos) {
+    private static VeiculoDeAluguer procurarVeiculo(int id) {
+        for (VeiculoDeAluguer v : listaVeiculos) {
             if (v.getId() == id) return v;
         }
         return null;
     }
 
     private static void listarVeiculos() {
-        for (Veiculo v : listaVeiculos) {
+        for (VeiculoDeAluguer v : listaVeiculos) {
             System.out.println(v.toString());
         }
     }

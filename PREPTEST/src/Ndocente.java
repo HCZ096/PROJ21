@@ -3,8 +3,8 @@ import java.util.Scanner;
 public class Ndocente extends Funcionario{
     private String servico;
     public Ndocente(){}
-    public Ndocente(String nome,int id,String metodopagamento,int anoContrato,String servico){
-        super(nome,id,metodopagamento,anoContrato);
+    public Ndocente(int id, String nome,String metodopagamento,int anoContrato,String servico){
+        super(id,nome,metodopagamento,anoContrato);
         this.servico = servico;
     }
 
@@ -30,6 +30,3 @@ public class Ndocente extends Funcionario{
 
 
 }
-
-
-

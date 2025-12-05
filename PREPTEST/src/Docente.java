@@ -8,8 +8,13 @@ public class Docente extends Funcionario {
         this.listaFaculdades = new ArrayList<>();
     }
 
-    public Docente(String nome, int id,String metodopagamento, int anoContrato) {
-        super(nome, id,metodopagamento, anoContrato);
+    public Docente(int id, String nome,String metodopagamento, int anoContrato, String faculdades) {
+        super(id, nome,metodopagamento, anoContrato);
+        if(faculdades != null && !faculdades.isEmpty()){
+            for (String faculdade : faculdades.split(",")) {
+                this.listaFaculdades.add(faculdade.trim());
+            }
+        }
     }
 
     public ArrayList<String> getListaFaculdades() {

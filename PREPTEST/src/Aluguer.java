@@ -1,13 +1,13 @@
 import java.io.Serializable;
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.*;
+import java.time.LocalDateTime;
 
 public class Aluguer implements Serializable {
     private LocalDateTime inicio,fim;
     private Utilizador utilizador;
     private VeiculoDeAluguer veiculo;
+    private boolean capacete;
+    private boolean luz;
 
     public  Aluguer() {}
 
@@ -19,6 +19,16 @@ public class Aluguer implements Serializable {
         this.veiculo = veiculo;
         this.utilizador = utilizador;
     }
+
+    public Aluguer(Utilizador utilizador, VeiculoDeAluguer veiculo, LocalDateTime inicio, LocalDateTime fim, boolean capacete, boolean luz) {
+        this.utilizador = utilizador;
+        this.veiculo = veiculo;
+        this.inicio = inicio;
+        this.fim = fim;
+        this.capacete = capacete;
+        this.luz = luz;
+    }
+
     public LocalDateTime getinicio() {
         return inicio;
     }
@@ -51,8 +61,27 @@ public class Aluguer implements Serializable {
         this.veiculo = veiculo;
     }
 
+    public long getHoras() {
+        Duration duracao = Duration.between(inicio, fim);
+        return duracao.toHours();
+    }
 
-    public double valorTotalAluguer(VeiculoDeAluguer v, Utilizador u) {
+    private double custoExtras(){
+        double total = 0.0;
+        if(capacete){
+            total += 5.0;
+        }
+        if(luz){
+            total += 2.0;
+        }
+        return total;
+    }
+
+    public double valorTotalAluguer() {
+        return calcularCusto();
+    }
+
+    public double calcularCusto() {
 
 
         Duration duracao = Duration.between(inicio, fim);
@@ -62,7 +91,7 @@ public class Aluguer implements Serializable {
         long dias = totalHoras / 24;           // nº de dias completos
         long horasRestantes = totalHoras % 24; // horas que sobram após contar os dias
 
-        double precoHora = u.precoPorHora(v);
+        double precoHora = utilizador.precoPorHora(veiculo);
         double custo = 0.0;
 
         // Cada dia conta como 8 horas pagas
@@ -72,6 +101,7 @@ public class Aluguer implements Serializable {
 
         // As horas restantes são cobradas normalmente
         custo += horasRestantes * precoHora;
+        custo += custoExtras();
 
         System.out.println("Preço por hora: " + precoHora);
         System.out.println("Total horas: " + totalHoras);
@@ -85,4 +115,3 @@ public class Aluguer implements Serializable {
         return "Aluguer";
     }
 }
-
