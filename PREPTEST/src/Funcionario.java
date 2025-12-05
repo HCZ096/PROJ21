@@ -1,6 +1,5 @@
-import java.util.Scanner;
 
-public class Funcionario extends Utilizador{
+abstract public class Funcionario extends Utilizador{
     protected int anoContrato;
 
 

@@ -8,10 +8,6 @@ public class Aluguer implements Serializable {
     private LocalDateTime inicio,fim;
     private Utilizador utilizador;
     private VeiculoDeAluguer veiculo;
-    private Estudante estudante;
-    private Funcionario funcionario;
-    private Ndocente ndocente;
-    private Bicicleta bicicleta;
 
     public  Aluguer() {}
 
@@ -76,10 +72,7 @@ public class Aluguer implements Serializable {
 
         // As horas restantes são cobradas normalmente
         custo += horasRestantes * precoHora;
-        if (u.equals(ndocente)) {
-            ndocente.descontoUtilizador(custo);
-            System.out.println("Desconto utilizador com sucesso");
-        }
+
         System.out.println("Preço por hora: " + precoHora);
         System.out.println("Total horas: " + totalHoras);
         System.out.println("Dias completos: " + dias);

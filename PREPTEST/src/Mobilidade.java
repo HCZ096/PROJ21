@@ -1,340 +1,357 @@
-import javax.imageio.stream.FileImageInputStream;
 import java.io.*;
-import java.time.*;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Scanner;
 
-
+/**
+ * Classe principal do projeto Mobilidade UC.
+ * Responsável por carregar dados, gerir menus e persistir informações.
+ */
 public class Mobilidade {
 
-    public Mobilidade(){}
+    // Listas para armazenamento em memória
+    private static ArrayList<Utilizador> listaUtilizadores = new ArrayList<>();
+    private static ArrayList<VeiculoDeAluguer> listaVeiculos = new ArrayList<>();
+    private static ArrayList<Aluguer> listaAlugueres = new ArrayList<>();
 
-   public static void main(String[] args) {
+    // Scanner global para leitura de dados
+    private static Scanner sc = new Scanner(System.in);
 
-       ArrayList<String> listafaculdades = new ArrayList<>();
+    // Formatador de data para input/output
+    private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-       Scanner sc = new Scanner(System.in);
-       Boolean condicao = true;
+    public static void main(String[] args) {
+        System.out.println("=== A INICIAR SISTEMA DE MOBILIDADE UC ===");
 
-       while(condicao) {
-           System.out.println("1- Carregar Utilizador | 2 - Carregar veiculo | 3- Carregar Aluguer | 4- Criar Aluguer | 5- Listar Alugueres | 6- Terminar");
+        // 1. Carregar dados iniciais (Requisitos Funcionais)
+        carregarUtilizadores(); // [cite: 37]
+        carregarVeiculos();     // [cite: 38]
+        carregarAlugueres();    // [cite: 39]
 
-           int opc_principal ;
-           try{
-               opc_principal = sc.nextInt();
-           }catch(InputMismatchException e){
-               System.out.println("ERRO : Insira um numero valido ");
-               sc.nextLine();
-               continue;
-           }
-           sc.nextLine();
+        boolean sair = false;
 
-           File arq = new File("utilizadores.txt");
-           File arq_veiculo = new File("veiculos.txt");
-           switch (opc_principal) {
+        // Loop do Menu Principal
+        while (!sair) {
+            System.out.println("\n################ MENU ################");
+            System.out.println("1. Criar Aluguer");
+            System.out.println("2. Listar Alugueres");
+            System.out.println("3. Listar Veículos Disponíveis (Extra)");
+            System.out.println("4. Terminar e Sair");
+            System.out.print("Escolha uma opção: ");
 
-               case 1:
-                   // ao iniciar, a aplicação deve carregar os utilizadores a partir de um
-                   //ficheiro de texto (utilizadores.txt)
-                   if (arq.exists() && arq.isFile()) {
-                       try {
-                           FileReader arq1 = new FileReader(arq);
-                           BufferedReader br = new BufferedReader(arq1);
+            try {
+                int opcao = sc.nextInt();
+                sc.nextLine(); // Limpar buffer
 
+                switch (opcao) {
+                    case 1:
+                        criarAluguer(); // [cite: 40, 41]
+                        break;
+                    case 2:
+                        listarAlugueres(); // [cite: 42, 43]
+                        break;
+                    case 3:
+                        listarVeiculos();
+                        break;
+                    case 4:
+                        guardarAlugueres(); // [cite: 44]
+                        sair = true;
+                        break;
+                    default:
+                        System.out.println("Opção inválida.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Erro: Por favor insira um número inteiro.");
+                sc.nextLine(); // Limpar buffer
+            } catch (Exception e) {
+                System.out.println("Erro inesperado: " + e.getMessage());
+            }
+        }
 
-                           String line;
-                           while ((line = br.readLine()) != null)
-                               System.out.println(line);
+        sc.close();
+        System.out.println("Aplicação terminada com sucesso.");
+    }
 
+    // ==========================================================
+    // MÉTODOS DE LEITURA DE FICHEIROS (TXT e OBJ)
+    // ==========================================================
 
+    /**
+     * Carrega utilizadores a partir de 'utilizadores.txt'.
+     * Formato esperado (exemplo): TIPO;ID;NOME;PAGAMENTO;EXTRA1;EXTRA2...
+     */
+    private static void carregarUtilizadores() {
+        File file = new File("utilizadores.txt");
+        if (!file.exists()) {
+            System.out.println("Aviso: Ficheiro 'utilizadores.txt' não encontrado.");
+            return;
+        }
 
-                       } catch (FileNotFoundException ex) {
-                           System.out.println("Erro ao Abrir Ficheiro de texto Utilizador!");
-                       } catch (IOException ex) {
-                           System.out.println("Erro ao Ler Ficheiro de texto Utilizador!");
-                       }
-                   } else {
-                       System.out.println("Nenhum arquivo Utilizador encontrado!");
-                   }
-                   break;
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                if (linha.trim().isEmpty()) continue;
 
+                String[] dados = linha.split(";");
+                // Factory simples baseada no tipo de utilizador para evitar instanceof posterior
+                // Assumindo estrutura: Tipo;Mecanografico;Nome;MetodoPagamento;...
+                try {
+                    String tipo = dados[0].toUpperCase();
+                    int id = Integer.parseInt(dados[1].trim());
+                    String nome = dados[2].trim();
+                    String pagamento = dados[3].trim(); // "Cartão" ou "Multibanco" [cite: 20]
 
-               case 2:
-                   // ao iniciar, a aplicação deve carregar os veículos a partir de um ficheiro
-                   //de texto (veículos.txt)
-                   if (arq_veiculo.exists() && arq_veiculo.isFile()) {
-                       try {
-                           FileReader arq1 = new FileReader(arq_veiculo);
-                           BufferedReader br1 = new BufferedReader(arq1);
-                           String line;
+                    Utilizador u = null;
 
-                           while ((line = br1.readLine()) != null)
-                               System.out.println(line);
-                           br1.close();
+                    // Lógica de instanciação baseada no enunciado [cite: 21, 22]
+                    switch (tipo) {
+                        case "ESTUDANTE":
+                            String curso = dados[4].trim();
+                            String polo = dados[5].trim();
+                            u = new Estudante(id, nome, pagamento, curso, polo);
+                            break;
+                        case "DOCENTE":
+                            int anoContratoD = Integer.parseInt(dados[4].trim());
+                            // Assumindo que faculdades vêm separadas por vírgula no campo 5
+                            String faculdades = dados[5].trim();
+                            u = new Docente(id, nome, pagamento, anoContratoD, faculdades);
+                            break;
+                        case "NAODOCENTE":
+                            int anoContratoND = Integer.parseInt(dados[4].trim());
+                            String servico = dados[5].trim();
+                            u = new Ndocente(id, nome, pagamento, anoContratoND, servico);
+                            break;
+                        default:
+                            System.out.println("Tipo de utilizador desconhecido: " + tipo);
+                    }
 
-                       } catch (FileNotFoundException ex) {
-                           System.out.println("Erro ao Abrir Ficheiro de texto veiculos!");
-                       } catch (IOException ex) {
-                           System.out.println("Erro ao Ler Ficheiro de texto veiculos!");
-                       }
-                   } else {
-                       System.out.println("Nenhum arquivo veiculos encontrado!");
-                   }
-                   break;
-               case 3:
-                   //ao iniciar, a aplicação deve carregar os alugueres a partir de um
-                   //ficheiro de objetos (alugueres.obj), caso exista
-                   File f_veiculo = new File("veiculos.obj");
+                    if (u != null) {
+                        listaUtilizadores.add(u);
+                    }
+                } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                    System.out.println("Erro ao processar linha de utilizador: " + linha);
+                }
+            }
+            System.out.println("Utilizadores carregados: " + listaUtilizadores.size());
+        } catch (IOException e) {
+            System.out.println("Erro ao ler ficheiro de utilizadores: " + e.getMessage());
+        }
+    }
 
-                   try {
-                       FileInputStream fis = new FileInputStream(f_veiculo);
-                       ObjectInputStream ois = new ObjectInputStream(fis);
-                       Aluguer a = (Aluguer) ois.readObject();
-                       System.out.println(a);
-                       ois.close();
-                   } catch (FileNotFoundException ex1) {
-                       System.out.println("Erro a abrir ficheiro");
-                   } catch (IOException ex1) {
-                       System.out.println("Erro a ler ficheio");
-                   } catch (ClassNotFoundException ex1) {
-                       System.out.println("Erro a converter ficheiro");
-                   }
-                   break;
+    /**
+     * Carrega veículos a partir de 'veiculos.txt'.
+     * Formato esperado (exemplo): TIPO;ID;GPS;EXTRA...
+     */
+    private static void carregarVeiculos() {
+        File file = new File("veiculos.txt");
+        if (!file.exists()) {
+            System.out.println("Aviso: Ficheiro 'veiculos.txt' não encontrado.");
+            return;
+        }
 
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                if (linha.trim().isEmpty()) continue;
 
-               case 4:
+                String[] dados = linha.split(";");
+                try {
+                    String tipo = dados[0].toUpperCase();
+                    int id = Integer.parseInt(dados[1].trim());
+                    String gps = dados[2].trim(); // [cite: 16]
 
-                   //Criar aluguer: aplicação deve solicitar o número mecanográfico do utilizador, o ID do
-                   //veículo e os restantes dados do aluguer. No final, deve apresentar um resumo do aluguer,
-                   //  incluindo o custo.
-                   //Um aluguer associa um utilizador a um veículo, incluindo a data e hora de início e a
-                   //data e hora de fim do aluguer.
+                    VeiculoDeAluguer v = null;
 
+                    // Lógica de instanciação baseada no enunciado [cite: 17, 18, 19]
+                    switch (tipo) {
+                        case "BICICLETA":
+                            // Campo extra: numero de lugares (1 ou 2)
+                            int lugares = Integer.parseInt(dados[3].trim());
+                            v = new Bicicleta(id, gps, lugares);
+                            break;
+                        case "TROTINETE":
+                            // Campo extra: bateria, temLCD (true/false)
+                            int bateriaT = Integer.parseInt(dados[3].trim());
+                            boolean temLCD = Boolean.parseBoolean(dados[4].trim());
+                            v = new Trotinete(id, gps, bateriaT, temLCD);
+                            break;
+                        case "EBIKE":
+                            // Campo extra: bateria, bateriaRemovivel (true/false)
+                            int bateriaE = Integer.parseInt(dados[3].trim());
+                            boolean batRemovivel = Boolean.parseBoolean(dados[4].trim());
+                            v = new Ebike(id, gps, bateriaE, batRemovivel);
+                            break;
+                    }
 
+                    if (v != null) {
+                        listaVeiculos.add(v);
+                    }
+                } catch (Exception e) {
+                    System.out.println("Erro ao processar linha de veículo: " + linha);
+                }
+            }
+            System.out.println("Veículos carregados: " + listaVeiculos.size());
+        } catch (IOException e) {
+            System.out.println("Erro ao ler ficheiro de veículos: " + e.getMessage());
+        }
+    }
 
-                   try {
-                       Aluguer a1 = new Aluguer();
-                       Utilizador u = null;
-                       //  while(opc){
-                       System.out.println("Diga se é | 1 - Estudante | 2- Funcionário :\n");
-                       int opcao = sc.nextInt();
-                       sc.nextLine(); //limpar buffer
-                       if (opcao == 1) {
-                           Estudante estudante = new Estudante();
-                           u = estudante;
-                           System.out.println("Diga o seu Curso Frequentado : \n");
-                           String curso = sc.nextLine();
-                           ((Estudante) u).setCursoMatriculado(curso);
-                           System.out.println("Diga o seu Polo Frequentado : \n");
-                           String polo = sc.nextLine();
-                           ((Estudante) u).setPoloMfrequentado(polo);
-                       } else if (opcao == 2) {
-                           System.out.println(" Diga se é |1 - Nao Docente | 2- Docente\n");
-                           int opcao2 = sc.nextInt();
-                           sc.nextLine();
+    /**
+     * Carrega alugueres do ficheiro de objetos se existir[cite: 39].
+     */
+    @SuppressWarnings("unchecked")
+    private static void carregarAlugueres() {
+        File file = new File("alugueres.obj");
+        if (!file.exists()) return;
 
-                           if (opcao2 == 1) {
-                               Ndocente ndocente = new Ndocente();
-                               u = ndocente;
-                               System.out.println("Diga o Ano em que o Contrato Expira : \n");
-                               int contrato = sc.nextInt();
-                               sc.nextLine();
-                               ((Ndocente) u).setAnoContrato(contrato);
-                               System.out.println("Diga  o Servico em que Frequenta : \n");
-                               String servico = sc.nextLine();
-                               ((Ndocente) u).setServico(servico);
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            listaAlugueres = (ArrayList<Aluguer>) ois.readObject();
+            System.out.println("Histórico de alugueres carregado: " + listaAlugueres.size());
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Erro ao carregar ficheiro de objetos: " + e.getMessage());
+        }
+    }
 
-                           } else if (opcao2 == 2) {
-                               Docente docente = new Docente();
-                               u = docente;
-                               boolean op = true;
-                               while (op) { // While para preencher veiculoalugado Lista de Faculades
-                                   System.out.println("Diga as faculdades em que Leciona :  | 1 - Adicionar | 2 - Concluido |");
-                                   String in2 = sc.nextLine();
-                                   if (in2.equals("1")) {
-                                       String f = sc.nextLine();
-                                       ((Docente) u).listaFaculdades.add(f);
+    // ==========================================================
+    // MÉTODOS DE LÓGICA DO MENU
+    // ==========================================================
 
-                                   } else if (in2.equals("2")) {
-                                       op = false;
-                                   } else {
-                                       System.out.println("Opcao Invalida . \n ");
+    /**
+     * Lógica para criar um novo aluguer[cite: 40].
+     * Solicita IDs, valida existência, pede datas e extras.
+     */
+    private static void criarAluguer() {
+        System.out.println("\n--- NOVO ALUGUER ---");
 
-                                   }
-                               }
+        // 1. Identificar Utilizador
+        Utilizador u = null;
+        while (u == null) {
+            System.out.print("Insira o Nº Mecanográfico do Utilizador (ou 0 para cancelar): ");
+            int idU = sc.nextInt();
+            if (idU == 0) return;
+            u = procurarUtilizador(idU);
+            if (u == null) System.out.println("Utilizador não encontrado.");
+        }
+        System.out.println("Utilizador selecionado: " + u.getNome());
 
-                           } else {
-                               System.out.println("Opcao invalida");
-                               //opc = false;
-                           }
-                       }
+        // 2. Identificar Veículo
+        VeiculoDeAluguer v = null;
+        while (v == null) {
+            System.out.print("Insira o ID do Veículo (ou 0 para cancelar): ");
+            int idV = sc.nextInt();
+            if (idV == 0) return;
+            v = procurarVeiculo(idV);
+            if (v == null) System.out.println("Veículo não encontrado.");
+        }
+        // Nota: Num sistema real verificariamos se o veículo já está alugado nessas datas.
 
-                       if (u == null){
-                           System.out.println("Erro na criacao do utilizador!. A voltar ao menu");
-                           break;
-                       }
+        sc.nextLine(); // Limpar buffer
 
-                       System.out.println("Diga o seu Nome : \n");
-                       u.setNome(sc.nextLine());
-                       System.out.println("Diga o seu  numero mecanográfico : \n");
-                       u.setId(sc.nextInt());
-                       sc.nextLine();
-                       System.out.println("Diga o seu metodo de pagamento : |1 - Cartao | 2- Referecia Multibanco | \n");
-                       int pag = sc.nextInt();
-                       if (pag == 1) {
-                           u.setMetodopagamento("Cartao");
-                       } else {
-                           u.setMetodopagamento("Referencia Multibanco");
-                       }
+        // 3. Datas
+        LocalDateTime inicio = lerData("Data de Início (dd/MM/yyyy HH:mm): ");
+        LocalDateTime fim = lerData("Data de Fim (dd/MM/yyyy HH:mm): ");
 
+        if (fim.isBefore(inicio)) {
+            System.out.println("Erro: A data de fim tem de ser posterior à de início.");
+            return;
+        }
 
-                       System.out.println("Diga o tipo de veiculo: | 1 - Bicicleta | 2 - Trotinete | 3 - Ebike \n");
-                       int v_tipo = sc.nextInt();
+        // 4. Extras [cite: 26, 30]
+        System.out.print("Incluir Capacete? (S/N): ");
+        boolean capacete = sc.nextLine().trim().equalsIgnoreCase("S");
 
-                       VeiculoDeAluguer veiculoalugado = null;
-                       if (v_tipo == 1) {
-                           Bicicleta b = new Bicicleta();
-                           veiculoalugado = b;
-                           System.out.println("Diga o numero de assentos 1 - Um Assento | 2 - Dois Assentos  ");
-                           int opc_assento = sc.nextInt();
-                           sc.nextLine();
+        System.out.print("Incluir Luz? (S/N): ");
+        boolean luz = sc.nextLine().trim().equalsIgnoreCase("S");
 
-                           boolean assento;
-                           if (opc_assento == 1) {
-                               assento = true;
-                           } else {
-                               assento = false;
-                           }
-                           ((Bicicleta) veiculoalugado).setassentos(assento);
+        // 5. Instanciar e Adicionar
+        // Assumindo que a classe Aluguer recebe (Utilizador, Veiculo, Inicio, Fim, Capacete, Luz)
+        Aluguer novoAluguer = new Aluguer(u, v, inicio, fim, capacete, luz);
 
-                       } else if (v_tipo == 2) {
-                           Trotinete trotinete = new Trotinete();
-                           veiculoalugado = trotinete;
-                           System.out.println("Diga o tipo de LCD |1- LCD C MAPA | 2- LCD S MAPA |");
-                           int opc_lcd = sc.nextInt();
-                           sc.nextLine();
-                           boolean lcd;
-                           if (opc_lcd == 1) {
-                               lcd = true;
-                           } else {
-                               lcd = false;
-                           }
+        // Calcular custo (Polimorfismo deve ser usado aqui internamente no método calcularCusto)
+        double custo = novoAluguer.calcularCusto(); // [cite: 41]
 
+        listaAlugueres.add(novoAluguer);
 
-                       } else if (v_tipo == 3) {
-                           Ebike bike = new Ebike();
-                           veiculoalugado = bike;
-                           System.out.println("Diga o tipo de bateria | 1 - Removivel | 2 - Fixa ");
-                           int opc_bateria = sc.nextInt();
+        // 6. Resumo [cite: 41]
+        System.out.println("\n=== RESUMO DO ALUGUER ===");
+        System.out.println("Utilizador: " + u.getNome() + " (" + u.getClass().getSimpleName() + ")");
+        System.out.println("Veículo: " + v.getClass().getSimpleName() + " (ID: " + v.getId() + ")");
+        System.out.println("Duração: " + novoAluguer.getHoras() + " horas");
+        System.out.printf("Custo Total: %.2f €\n", custo);
+        System.out.println("=========================");
+    }
 
-                           boolean tipobateria;
-                           if (opc_bateria == 1) {
-                               tipobateria = true;
+    /**
+     * Lista todos os alugueres e o valor total faturado[cite: 42, 43].
+     */
+    private static void listarAlugueres() {
+        System.out.println("\n--- LISTA DE ALUGUERES ---");
+        if (listaAlugueres.isEmpty()) {
+            System.out.println("Não existem alugueres registados.");
+            return;
+        }
 
-                           } else {
-                               tipobateria = false;
-                           }
-                           bike.setBateriaRemovivel(tipobateria);
-                       }
-                       if(veiculoalugado == null){
-                           System.out.println("Veiculo Invalido ! Cancelando");
-                           break;
-                       }
-                       System.out.println("Diga o id do veiculo  : \n");
-                       int id_vc = sc.nextInt();
-                       sc.nextLine();
-                       veiculoalugado.setIdentificador(id_vc);
+        double totalFaturado = 0.0;
 
+        for (Aluguer a : listaAlugueres) {
+            // Assume-se que Aluguer.toString() imprime as características principais
+            System.out.println(a.toString());
+            System.out.printf("Custo: %.2f €\n", a.calcularCusto());
+            System.out.println("---------------------------");
+            totalFaturado += a.valorTotalAluguer();
+        }
 
-                       System.out.println("Diga data DIA|MES|ANO e hora e minuto de inicio: \n");
-                       int dia = sc.nextInt();
-                       int mes = sc.nextInt();
-                       int ano = sc.nextInt();
-                       int hora = sc.nextInt();
-                       int minuto = sc.nextInt();
+        System.out.printf("\nTOTAL FATURADO: %.2f €\n", totalFaturado); // [cite: 43]
+    }
 
+    /**
+     * Guarda a lista de alugueres num ficheiro de objetos[cite: 44].
+     */
+    private static void guardarAlugueres() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("alugueres.obj"))) {
+            oos.writeObject(listaAlugueres);
+            System.out.println("Alugueres exportados com sucesso para 'alugueres.obj'.");
+        } catch (IOException e) {
+            System.out.println("Erro ao guardar alugueres: " + e.getMessage());
+        }
+    }
 
-                       LocalDateTime data_inicio = LocalDateTime.of(ano, mes, dia, hora, minuto);
-                       a1.setInicio(data_inicio);
+    // ==========================================================
+    // MÉTODOS AUXILIARES
+    // ==========================================================
 
-                       System.out.println("Diga data DIA|MES|ANO e hora e minuto de fim: \n");
-                       int dia_fim = sc.nextInt();
-                       int mes_fim = sc.nextInt();
-                       int ano_fim = sc.nextInt();
-                       int hora_fim = sc.nextInt();
-                       int minuto_fim = sc.nextInt();
+    private static Utilizador procurarUtilizador(int id) {
+        for (Utilizador u : listaUtilizadores) {
+            if (u.getId() == id) return u;
+        }
+        return null;
+    }
 
-                       LocalDateTime data_fim = LocalDateTime.of(ano_fim, mes_fim, dia_fim, hora_fim, minuto_fim);
-                       a1.setFim(data_fim);
-                       double precoHora = veiculoalugado.precoPara(u);
-                       double totalAluguer = a1.valorTotalAluguer(veiculoalugado,u);
-                       System.out.println("Preco por hora da viagem : " + precoHora + "€" + "\n" + "Valor Total do Aluguer : " + " " + totalAluguer + "€");
-                       System.out.println("Informacao do Utilizador : ");
-                       // u.preencherDadosEspecificos(sc);
-                       System.out.println(u);
+    private static Veiculo procurarVeiculo(int id) {
+        for (Veiculo v : listaVeiculos) {
+            if (v.getId() == id) return v;
+        }
+        return null;
+    }
 
-                       // PREENCHER ALUGUERES.txt
-                       File f= new File("C:/Users/Administrador/Downloads/JAVA/alugueres.txt");
-                       try (FileWriter fw = new FileWriter(f,true);
-                            BufferedWriter bw = new BufferedWriter(fw)) {
+    private static void listarVeiculos() {
+        for (Veiculo v : listaVeiculos) {
+            System.out.println(v.toString());
+        }
+    }
 
-                           bw.write("======================================");
-                            bw.newLine();
-                            bw.write("Novo Aluguer");
-                            bw.newLine();
-                            bw.write("Data-Hora de registo " +LocalDateTime.now());
-                            bw.newLine();
-                           // Utilizador
-
-                            bw.write("Utilizador :");
-                            bw.newLine();
-                            bw.write("Nome :"+u.getNome());
-                            bw.newLine();
-                            bw.write("Nº Mecanográfico:"+u.getId());
-                            bw.newLine();
-                            bw.write("Metodo de Pagamento : "+ u.getMetodopagamento());
-                            bw.newLine();
-                            bw.write("Dados Especificos"+u.toString());
-                            bw.newLine();
-
-                           // Veiculo
-                            bw.write("Veiculo");
-                            bw.newLine();
-                            bw.write("Identificador do Veiculo  "+veiculoalugado.getIdentificador());
-                            bw.newLine();
-                            bw.write("Preco Por Hora : "+precoHora +"€");
-                            bw.newLine();
-
-                           // Aluguer
-                            bw.write("Aluguer");
-                            bw.write("Inicio de Aluguer : "+a1.getinicio());
-                            bw.write("Fim de Aluguer : "+a1.getFim());
-                       bw.write("Valor Total do ALuguer :  "+totalAluguer +"€");
-                            bw.write("================================================");
-                            bw.newLine();
-                       }catch (IOException e){
-                           System.out.println("erro ao escrever o ficherio");
-
-                       }
-
-                   }catch (InputMismatchException e) {
-                       System.out.println("ERRO: Inseriu um valor Invalido . Tente novamente");
-                   }catch(DateTimeException e){System.out.println("ERRO na Data/ Hora : " + e.getMessage());}break;
-
-               case 5 :
-                   //Listar alugueres: apresentar a lista de todos os alugueres com as principais características
-                   //de cada um e o respetivo custo. No final, apresentar o valor total dos alugueres.
-
-
-           }
-           //}
-       }
-
-   }}
+    private static LocalDateTime lerData(String mensagem) {
+        while (true) {
+            System.out.print(mensagem);
+            String input = sc.nextLine();
+            try {
+                return LocalDateTime.parse(input, FORMATO_DATA);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato inválido. Use dd/MM/yyyy HH:mm (Ex: 05/12/2025 14:30)");
+            }
+        }
+    }
+}

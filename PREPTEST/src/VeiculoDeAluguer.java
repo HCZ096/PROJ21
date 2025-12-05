@@ -1,9 +1,11 @@
-public abstract class VeiculoDeAluguer extends Aluguer{
+import java.io.Serializable;
+
+public abstract class VeiculoDeAluguer extends Aluguer implements Serializable {
 
     private int identificador;
     private String localizador;
 
-    public VeiculoDeAluguer(){};
+    public VeiculoDeAluguer(){}
 
     public VeiculoDeAluguer(int identificador, String localizador){
         this.identificador = identificador;

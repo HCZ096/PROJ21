@@ -29,6 +29,10 @@ public class Estudante extends Utilizador{
     public void setPoloMfrequentado(String poloMfrequentado) {
         this.poloMfrequentado = poloMfrequentado;
     }
+    @Override
+    public double descontoUtilizador(double preco) {
+        return preco;
+    }
 
 
     @Override
@@ -39,9 +43,7 @@ public class Estudante extends Utilizador{
 
     @Override
     public String toString () {
-        return "\n" + "Nome : " + " " + getNome() + "\n" +
-                "Metodopagamento : " + getMetodopagamento() + "\n" +
-                "Curso Frequentado :" + " " + getCursoMatriculado() + "\n" +
+        return "Curso Frequentado :" + " " + getCursoMatriculado() + "\n" +
                 "Polo mais Frequentado :" + " " + getPoloMfrequentado() + "\n";
         }
 }

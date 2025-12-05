@@ -1,7 +1,7 @@
 import java.io.Serializable;
 import java.util.Scanner;
 
-public abstract class Utilizador {
+public abstract class Utilizador implements Serializable {
     private int id;
     private String nome;
     protected String metodopagamento;
@@ -38,6 +38,8 @@ public abstract class Utilizador {
     public void setMetodopagamento(String metodopagamento) {
         this.metodopagamento = metodopagamento;
     }
+    public double descontoUtilizador(double preco) {
+       return preco ; }
 
     public abstract double precoPorHora(VeiculoDeAluguer v);
 

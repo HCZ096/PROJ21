@@ -27,7 +27,7 @@ public class Bicicleta extends VeiculoDeAluguer {
         return this.getassentos() ? 2.00 : 1;
     }
     public double precoPara(Funcionario f) {
-        return this.getassentos() ? 3.00 : 2.00;
+        return this.getassentos() ? 2.00 : 3.00;
     }
 
 

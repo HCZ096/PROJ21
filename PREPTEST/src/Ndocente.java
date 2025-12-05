@@ -15,16 +15,14 @@ public class Ndocente extends Funcionario{
         return this.servico = servico;
     }
 
+    @Override
     public double descontoUtilizador(double preco) {
         preco *= (50.0 / 100.0);
-        return preco;
+        return preco ;
     }
 
     public String toString(){
-        return "Nome : " +" " + getNome() +"\n "+
-                "ID : " + getId() +"\n "+
-                "Metodo de Pagamento : " + getMetodopagamento() + "\n" +
-                "Ano de Contrato : " + getAnoContrato() + "\n " +
+        return "Ano de Contrato : " + getAnoContrato() + "\n " +
                 "Servico : " + getServico();
     }
 

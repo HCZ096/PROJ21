@@ -18,12 +18,13 @@ public class Docente extends Funcionario {
        }
         return listaFaculdades;
     }
+    @Override
+    public double descontoUtilizador(double preco) {
+        return preco;
+    }
 
     public String toString(){
-        return "Nome : " +" " + getNome() +" \n"+
-                "ID : " + getId() +"\n"+
-                "Metodo Pagamento :" + getMetodopagamento() +" \n"+
-                "Ano de Contrato : " + getAnoContrato() +"\n "+
+        return "Ano de Contrato : " + getAnoContrato() +"\n "+
                 "Lista Faculdades : " + getListaFaculdades();
                  }
     }
