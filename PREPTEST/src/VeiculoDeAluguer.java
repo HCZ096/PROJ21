@@ -13,16 +13,8 @@ public abstract class VeiculoDeAluguer implements Serializable {
 
     }
 
-    public int getIdentificador() {
-        return identificador;
-    }
-
     public int getId(){
         return identificador;
-    }
-
-    public void setIdentificador(int identificador) {
-        this.identificador = identificador;
     }
 
     public String getLocalizador() {
@@ -33,9 +25,8 @@ public abstract class VeiculoDeAluguer implements Serializable {
         this.localizador = localizador;
     }
 
-    public abstract double precoPara(Utilizador u);
     public abstract double precoPara(Estudante e);
     public abstract double precoPara(Funcionario f);
 
-   // public abstract boolean setassentos(boolean assento);
+
 }

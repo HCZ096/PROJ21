@@ -1,8 +1,6 @@
 public abstract class VeiculoEletrico extends VeiculoDeAluguer
  {
     private int nivelbateria;
-    public VeiculoEletrico(){}
-
 
     public VeiculoEletrico(int identificador, String localizador,int nivelbateria){
         super(identificador,localizador);

@@ -6,30 +6,25 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-/**
- * Classe principal do projeto Mobilidade UC.
- * Responsável por carregar dados, gerir menus e persistir informações.
- */
-public class Mobilidade {
+    public class Mobilidade {
 
-    // Listas para armazenamento em memória
+         // Listas para armazenamento em memória
     private static ArrayList<Utilizador> listaUtilizadores = new ArrayList<>();
     private static ArrayList<VeiculoDeAluguer> listaVeiculos = new ArrayList<>();
     private static ArrayList<Aluguer> listaAlugueres = new ArrayList<>();
 
-    // Scanner global para leitura de dados
     private static Scanner sc = new Scanner(System.in);
 
-    // Formatador de data para input/output
+         //Formatador de data para input/output
     private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     public static void main(String[] args) {
         System.out.println("=== A INICIAR SISTEMA DE MOBILIDADE UC ===");
 
-        // 1. Carregar dados iniciais (Requisitos Funcionais)
-        carregarUtilizadores(); // [cite: 37]
-        carregarVeiculos();     // [cite: 38]
-        carregarAlugueres();    // [cite: 39]
+        //  Carregar dados iniciais
+        carregarUtilizadores();
+        carregarVeiculos();
+        carregarAlugueres();
 
         boolean sair = false;
 
@@ -38,75 +33,70 @@ public class Mobilidade {
             System.out.println("\n################ MENU ################");
             System.out.println("1. Criar Aluguer");
             System.out.println("2. Listar Alugueres");
-            System.out.println("3. Listar Veículos Disponíveis (Extra)");
-            System.out.println("4. Terminar e Sair");
+            System.out.println("3. Terminar e Sair");
             System.out.print("Escolha uma opção: ");
 
             try {
                 int opcao = sc.nextInt();
-                sc.nextLine(); // Limpar buffer
+                sc.nextLine();
 
                 switch (opcao) {
                     case 1:
-                        criarAluguer(); // [cite: 40, 41]
+                        criarAluguer();
                         break;
                     case 2:
-                        listarAlugueres(); // [cite: 42, 43]
+                        listarAlugueres();
                         break;
+
                     case 3:
-                        listarVeiculos();
-                        break;
-                    case 4:
-                        guardarAlugueres(); // [cite: 44]
+                        guardarAlugueres();
                         sair = true;
                         break;
                     default:
-                        System.out.println("Opção inválida.");
+                        System.out.println("Opção invalida.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Erro: Por favor insira um número inteiro.");
-                sc.nextLine(); // Limpar buffer
+                System.out.println("Erro: Insira um número inteiro.");
+                sc.nextLine();
             } catch (Exception e) {
-                System.out.println("Erro inesperado: " + e.getMessage());
+                System.out.println("Erro: " + e.getMessage());
             }
         }
 
         sc.close();
-        System.out.println("Aplicação terminada com sucesso.");
+        System.out.println("Aplicacao terminada com sucesso.");
     }
 
-    // ==========================================================
-    // MÉTODOS DE LEITURA DE FICHEIROS (TXT e OBJ)
-    // ==========================================================
 
-    /**
-     * Carrega utilizadores a partir de 'utilizadores.txt'.
-     * Formato esperado (exemplo): TIPO;ID;NOME;PAGAMENTO;EXTRA1;EXTRA2...
-     */
+    // MÉTODOS DE LEITURA DE FICHEIROS (TXT e OBJ)
+
+
+
     private static void carregarUtilizadores() {
-        File file = new File("utilizadores.txt");
+        File file = new File("C:\\Users\\Administrador\\Downloads\\JAVA\\utilizadores.txt");
         if (!file.exists()) {
             System.out.println("Aviso: Ficheiro 'utilizadores.txt' não encontrado.");
             return;
         }
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try {FileReader fr  = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+
             String linha;
             while ((linha = br.readLine()) != null) {
                 if (linha.trim().isEmpty()) continue;
 
                 String[] dados = linha.split(";");
-                // Factory simples baseada no tipo de utilizador para evitar instanceof posterior
-                // Assumindo estrutura: Tipo;Mecanografico;Nome;MetodoPagamento;...
+
                 try {
                     String tipo = dados[0].toUpperCase();
                     int id = Integer.parseInt(dados[1].trim());
                     String nome = dados[2].trim();
-                    String pagamento = dados[3].trim(); // "Cartão" ou "Multibanco" [cite: 20]
+                    String pagamento = dados[3].trim();
 
                     Utilizador u = null;
 
-                    // Lógica de instanciação baseada no enunciado [cite: 21, 22]
+
                     switch (tipo) {
                         case "ESTUDANTE":
                             String curso = dados[4].trim();
@@ -115,7 +105,7 @@ public class Mobilidade {
                             break;
                         case "DOCENTE":
                             int anoContratoD = Integer.parseInt(dados[4].trim());
-                            // Assumindo que faculdades vêm separadas por vírgula no campo 5
+
                             String faculdades = dados[5].trim();
                             u = new Docente(id, nome, pagamento, anoContratoD, faculdades);
                             break;
@@ -141,19 +131,18 @@ public class Mobilidade {
         }
     }
 
-    /**
-     * Carrega veículos a partir de 'veiculos.txt'.
-     * Formato esperado (exemplo): TIPO;ID;GPS;EXTRA...
-     */
     private static void carregarVeiculos() {
-        File file = new File("veiculos.txt");
+        File file = new File("C:\\Users\\Administrador\\Downloads\\JAVA\\veiculos.txt");
         if (!file.exists()) {
             System.out.println("Aviso: Ficheiro 'veiculos.txt' não encontrado.");
             return;
         }
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try {FileReader fr  = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+
             String linha;
+
             while ((linha = br.readLine()) != null) {
                 if (linha.trim().isEmpty()) continue;
 
@@ -161,25 +150,21 @@ public class Mobilidade {
                 try {
                     String tipo = dados[0].toUpperCase();
                     int id = Integer.parseInt(dados[1].trim());
-                    String gps = dados[2].trim(); // [cite: 16]
+                    String gps = dados[2].trim();
 
                     VeiculoDeAluguer v = null;
 
-                    // Lógica de instanciação baseada no enunciado [cite: 17, 18, 19]
                     switch (tipo) {
                         case "BICICLETA":
-                            // Campo extra: numero de lugares (1 ou 2)
-                            int lugares = Integer.parseInt(dados[3].trim());
+                            boolean lugares = Boolean.parseBoolean(dados[3].trim());
                             v = new Bicicleta(id, gps, lugares);
                             break;
                         case "TROTINETE":
-                            // Campo extra: bateria, temLCD (true/false)
                             int bateriaT = Integer.parseInt(dados[3].trim());
                             boolean temLCD = Boolean.parseBoolean(dados[4].trim());
                             v = new Trotinete(id, gps, bateriaT, temLCD);
                             break;
                         case "EBIKE":
-                            // Campo extra: bateria, bateriaRemovivel (true/false)
                             int bateriaE = Integer.parseInt(dados[3].trim());
                             boolean batRemovivel = Boolean.parseBoolean(dados[4].trim());
                             v = new Ebike(id, gps, bateriaE, batRemovivel);
@@ -199,34 +184,29 @@ public class Mobilidade {
         }
     }
 
-    /**
-     * Carrega alugueres do ficheiro de objetos se existir[cite: 39].
-     */
-    @SuppressWarnings("unchecked")
+
+
     private static void carregarAlugueres() {
-        File file = new File("alugueres.obj");
+        File file = new File("C:\\Users\\Administrador\\Downloads\\JAVA\\alugueres.obj");
         if (!file.exists()) return;
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+        try {FileInputStream fos = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fos);
+
             listaAlugueres = (ArrayList<Aluguer>) ois.readObject();
             System.out.println("Histórico de alugueres carregado: " + listaAlugueres.size());
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Erro ao carregar ficheiro de objetos: " + e.getMessage());
-        }
+        } catch (IOException  e) {
+            System.out.println("Erro ao carregar ficheiro de objetos" + ": " + e.getMessage());
+        }catch (ClassNotFoundException e ){System.out.println("Erro nas Classes");}
     }
 
-    // ==========================================================
-    // MÉTODOS DE LÓGICA DO MENU
-    // ==========================================================
 
-    /**
-     * Lógica para criar um novo aluguer[cite: 40].
-     * Solicita IDs, valida existência, pede datas e extras.
-     */
+    // MÉTODOS DE LÓGICA DO MENU
+
     private static void criarAluguer() {
         System.out.println("\n--- NOVO ALUGUER ---");
 
-        // 1. Identificar Utilizador
+
         Utilizador u = null;
         while (u == null) {
             System.out.print("Insira o Nº Mecanográfico do Utilizador (ou 0 para cancelar): ");
@@ -237,7 +217,7 @@ public class Mobilidade {
         }
         System.out.println("Utilizador selecionado: " + u.getNome());
 
-        // 2. Identificar Veículo
+
         VeiculoDeAluguer v = null;
         while (v == null) {
             System.out.print("Insira o ID do Veículo (ou 0 para cancelar): ");
@@ -246,47 +226,38 @@ public class Mobilidade {
             v = procurarVeiculo(idV);
             if (v == null) System.out.println("Veículo não encontrado.");
         }
-        // Nota: Num sistema real verificariamos se o veículo já está alugado nessas datas.
+        sc.nextLine();
 
-        sc.nextLine(); // Limpar buffer
 
-        // 3. Datas
         LocalDateTime inicio = lerData("Data de Início (dd/MM/yyyy HH:mm): ");
         LocalDateTime fim = lerData("Data de Fim (dd/MM/yyyy HH:mm): ");
 
         if (fim.isBefore(inicio)) {
-            System.out.println("Erro: A data de fim tem de ser posterior à de início.");
+            System.out.println("Erro: A data de fim tem de ser posterior a de início.");
             return;
         }
 
-        // 4. Extras [cite: 26, 30]
+
         System.out.print("Incluir Capacete? (S/N): ");
         boolean capacete = sc.nextLine().trim().equalsIgnoreCase("S");
 
         System.out.print("Incluir Luz? (S/N): ");
         boolean luz = sc.nextLine().trim().equalsIgnoreCase("S");
 
-        // 5. Instanciar e Adicionar
-        // Assumindo que a classe Aluguer recebe (Utilizador, Veiculo, Inicio, Fim, Capacete, Luz)
         Aluguer novoAluguer = new Aluguer(u, v, inicio, fim, capacete, luz);
 
-        // Calcular custo (Polimorfismo deve ser usado aqui internamente no método calcularCusto)
-        double custo = novoAluguer.calcularCusto(); // [cite: 41]
+        double custo = novoAluguer.calcularCusto();
 
         listaAlugueres.add(novoAluguer);
 
-        // 6. Resumo [cite: 41]
         System.out.println("\n=== RESUMO DO ALUGUER ===");
-        System.out.println("Utilizador: " + u.getNome() + " (" + u.getClass().getSimpleName() + ")");
-        System.out.println("Veículo: " + v.getClass().getSimpleName() + " (ID: " + v.getId() + ")");
-        System.out.println("Duração: " + novoAluguer.getHoras() + " horas");
+        System.out.println("Utilizador: " + u.getNome());
+        System.out.println("Veículo:" + "(ID: " + v.getId() + ")");
+        System.out.println("Duração: " + novoAluguer.getHoras().toHours() + " horas");
         System.out.printf("Custo Total: %.2f €\n", custo);
         System.out.println("=========================");
     }
 
-    /**
-     * Lista todos os alugueres e o valor total faturado[cite: 42, 43].
-     */
     private static void listarAlugueres() {
         System.out.println("\n--- LISTA DE ALUGUERES ---");
         if (listaAlugueres.isEmpty()) {
@@ -295,23 +266,23 @@ public class Mobilidade {
         }
 
         double totalFaturado = 0.0;
-
         for (Aluguer a : listaAlugueres) {
-            // Assume-se que Aluguer.toString() imprime as características principais
+            double custo = a.calcularCusto();
             System.out.println(a.toString());
-            System.out.printf("Custo: %.2f €\n", a.calcularCusto());
+            System.out.printf("Custo: " + custo + "€\n" );
+            totalFaturado += custo;
             System.out.println("---------------------------");
-            totalFaturado += a.valorTotalAluguer();
         }
-
-        System.out.printf("\nTOTAL FATURADO: %.2f €\n", totalFaturado); // [cite: 43]
+        System.out.println("---------------------------");
+        System.out.printf("TOTAL FATURADO: %.2f €\n", totalFaturado);
+        System.out.println("---------------------------");
     }
 
-    /**
-     * Guarda a lista de alugueres num ficheiro de objetos[cite: 44].
-     */
     private static void guardarAlugueres() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("alugueres.obj"))) {
+        File file = new File("C:\\Users\\Administrador\\Downloads\\JAVA\\alugueres.obj");
+        try {   FileOutputStream fos = new FileOutputStream(file);
+                ObjectOutputStream oos =  new ObjectOutputStream(fos);
+
             oos.writeObject(listaAlugueres);
             System.out.println("Alugueres exportados com sucesso para 'alugueres.obj'.");
         } catch (IOException e) {
@@ -319,10 +290,9 @@ public class Mobilidade {
         }
     }
 
-    // ==========================================================
-    // MÉTODOS AUXILIARES
-    // ==========================================================
 
+
+    // METODOS AUXILIARES
     private static Utilizador procurarUtilizador(int id) {
         for (Utilizador u : listaUtilizadores) {
             if (u.getId() == id) return u;
@@ -337,11 +307,6 @@ public class Mobilidade {
         return null;
     }
 
-    private static void listarVeiculos() {
-        for (VeiculoDeAluguer v : listaVeiculos) {
-            System.out.println(v.toString());
-        }
-    }
 
     private static LocalDateTime lerData(String mensagem) {
         while (true) {

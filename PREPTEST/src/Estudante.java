@@ -1,11 +1,7 @@
-import java.util.Scanner;
 public class Estudante extends Utilizador{
 
     private String poloMfrequentado;
     private String cursoMatriculado;
-
-
-    public Estudante(){}
 
     public Estudante(int id, String nome,String metodopagamento,String cursoMatriculado, String poloMfrequentado) {
 
@@ -29,10 +25,7 @@ public class Estudante extends Utilizador{
     public void setPoloMfrequentado(String poloMfrequentado) {
         this.poloMfrequentado = poloMfrequentado;
     }
-    @Override
-    public double descontoUtilizador(double preco) {
-        return preco;
-    }
+
 
 
     @Override

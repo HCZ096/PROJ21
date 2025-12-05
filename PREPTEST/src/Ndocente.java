@@ -1,4 +1,3 @@
-import java.util.Scanner;
 
 public class Ndocente extends Funcionario{
     private String servico;
@@ -17,7 +16,7 @@ public class Ndocente extends Funcionario{
 
     @Override
     public double descontoUtilizador(double preco) {
-        preco *= (50.0 / 100.0);
+        preco *= 0.50;
         return preco ;
     }
 

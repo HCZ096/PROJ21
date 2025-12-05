@@ -38,6 +38,7 @@ public abstract class Utilizador implements Serializable {
     public void setMetodopagamento(String metodopagamento) {
         this.metodopagamento = metodopagamento;
     }
+
     public double descontoUtilizador(double preco) {
        return preco ; }
 

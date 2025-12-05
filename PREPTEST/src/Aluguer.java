@@ -2,12 +2,15 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+
 public class Aluguer implements Serializable {
     private LocalDateTime inicio,fim;
-    private Utilizador utilizador;
     private VeiculoDeAluguer veiculo;
+    private Utilizador utilizador;;
     private boolean capacete;
     private boolean luz;
+
+    private static final long serialVersionUID = -6116385171206992361L;
 
     public  Aluguer() {}
 
@@ -45,28 +48,12 @@ public class Aluguer implements Serializable {
         this.fim = fim;
     }
 
-    public Utilizador getUtilizador() {
-        return utilizador;
-    }
-
-    public void setUtilizador(Utilizador utilizador) {
-        this.utilizador = utilizador;
-    }
-
-    public VeiculoDeAluguer getVeiculo() {
-        return veiculo;
-    }
-
-    public void setVeiculo(VeiculoDeAluguer veiculo) {
-        this.veiculo = veiculo;
-    }
-
-    public long getHoras() {
+    public Duration getHoras() {
         Duration duracao = Duration.between(inicio, fim);
-        return duracao.toHours();
+        return duracao;
     }
 
-    private double custoExtras(){
+    private double servicoExtras(){
         double total = 0.0;
         if(capacete){
             total += 5.0;
@@ -76,42 +63,39 @@ public class Aluguer implements Serializable {
         }
         return total;
     }
-
-    public double valorTotalAluguer() {
-        return calcularCusto();
-    }
-
     public double calcularCusto() {
-
-
-        Duration duracao = Duration.between(inicio, fim);
-
+        Duration duracao = getHoras();
 
         long totalHoras = duracao.toHours();   // total de horas do aluguer
-        long dias = totalHoras / 24;           // nº de dias completos
+        long dias = totalHoras / 24;           // n de dias completos
         long horasRestantes = totalHoras % 24; // horas que sobram após contar os dias
 
         double precoHora = utilizador.precoPorHora(veiculo);
+
         double custo = 0.0;
 
         // Cada dia conta como 8 horas pagas
         if (dias > 0) {
-            custo += dias * 8 * precoHora;
+            custo = dias * 8 * precoHora;
         }
 
         // As horas restantes são cobradas normalmente
         custo += horasRestantes * precoHora;
-        custo += custoExtras();
 
+        custo = utilizador.descontoUtilizador(custo);
+
+       custo += servicoExtras();
+
+        System.out.println("\n");
         System.out.println("Preço por hora: " + precoHora);
         System.out.println("Total horas: " + totalHoras);
         System.out.println("Dias completos: " + dias);
         System.out.println("Horas restantes: " + horasRestantes);
 
-        return custo;
+        return custo ;
     }
 
     public String toString() {
-        return "Aluguer";
+        return "Tipo de Veiculo : "+ " " + veiculo.toString() ;
     }
 }

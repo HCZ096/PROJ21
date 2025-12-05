@@ -18,7 +18,6 @@ abstract public class Funcionario extends Utilizador{
         this.anoContrato = anoContrato;
     }
 
-
     public double precoPorHora(VeiculoDeAluguer v) {
         return v.precoPara(this);}
 

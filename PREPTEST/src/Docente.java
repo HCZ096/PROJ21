@@ -3,11 +3,6 @@ import java.util.ArrayList;
 public class Docente extends Funcionario {
     ArrayList<String> listaFaculdades = new ArrayList<>();
 
-
-    public Docente() {
-        this.listaFaculdades = new ArrayList<>();
-    }
-
     public Docente(int id, String nome,String metodopagamento, int anoContrato, String faculdades) {
         super(id, nome,metodopagamento, anoContrato);
         if(faculdades != null && !faculdades.isEmpty()){
@@ -23,10 +18,7 @@ public class Docente extends Funcionario {
        }
         return listaFaculdades;
     }
-    @Override
-    public double descontoUtilizador(double preco) {
-        return preco;
-    }
+
 
     public String toString(){
         return "Ano de Contrato : " + getAnoContrato() +"\n "+
